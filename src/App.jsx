@@ -86,7 +86,7 @@ const App = ({ isServerInfo }) => {
 
   return (
     <Layout style={{ height: "100vh", overflow: "auto" }}>
-      <HashRouter>
+      <HashRouter basename="https://saviour1001.github.io/draft-deploy">
         <Header style={styles.header}>
           <Logo />
           <MenuItems />
