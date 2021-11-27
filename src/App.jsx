@@ -86,7 +86,7 @@ const App = ({ isServerInfo }) => {
 
   return (
     <Layout style={{ height: "100vh", overflow: "auto" }}>
-      <Router>
+      <HashRouter>
         <Header style={styles.header}>
           <Logo />
           <MenuItems />
@@ -168,7 +168,7 @@ const App = ({ isServerInfo }) => {
             </ColorContext.Provider>
           </Switch>
         </div>
-      </Router>
+      </HashRouter>
       <Footer style={{ textAlign: "center" }}>
         <Text style={{ display: "block" }}>
           ⭐️ Please star this{" "}
