@@ -105,13 +105,13 @@ const App = ({ isServerInfo }) => {
 
         <div style={styles.content}>
           <Switch>
-            <Route path="/quickstart">
+            <Route path="/quickstart" exact>
               <QuickStart isServerInfo={isServerInfo} />
             </Route>
-            <Route path="/wallet">
+            <Route path="/wallet" exact>
               <Wallet />
             </Route>
-            <Route path="/1inch">
+            <Route path="/1inch" exact>
               <Tabs defaultActiveKey="1" style={{ alignItems: "center" }}>
                 <Tabs.TabPane tab={<span>Ethereum</span>} key="1">
                   <InchDex chain="eth" />
@@ -124,19 +124,19 @@ const App = ({ isServerInfo }) => {
                 </Tabs.TabPane>
               </Tabs>
             </Route>
-            <Route path="/erc20balance">
+            <Route path="/erc20balance" exact>
               <ERC20Balance />
             </Route>
-            <Route path="/onramp">
+            <Route path="/onramp" exact>
               <Ramper />
             </Route>
-            <Route path="/erc20transfers">
+            <Route path="/erc20transfers" exact>
               <ERC20Transfers />
             </Route>
-            <Route path="/nftBalance">
+            <Route path="/nftBalance" exact>
               <NFTBalance />
             </Route>
-            <Route path="/contract">
+            <Route path="/contract" exact>
               <Contract />
             </Route>
             <Route exact path="/">
@@ -152,10 +152,10 @@ const App = ({ isServerInfo }) => {
                 playerDidNotRedirect: playerDidNotRedirect,
               }}
             >
-              <Route path="/chess">
+              <Route exact path="/chess">
                 <Onboard setUserName={setUserName} />
               </Route>
-              <Route path="/game/:gameid" exact>
+              <Route exact path="/game/:gameid">
                 {didRedirect ? (
                   <React.Fragment>
                     <JoinGame userName={userName} isCreator={true} />

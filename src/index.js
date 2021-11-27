@@ -4,7 +4,7 @@ import App from "./App";
 import { MoralisProvider } from "react-moralis";
 import "./index.css";
 import QuickStart from "components/QuickStart";
-import { BrowserRouter, HashRouter } from "react-router-dom";
+import { BrowserRouter as Router, HashRouter } from "react-router-dom";
 
 /** Get your free Moralis Account https://moralis.io/ */
 
@@ -31,8 +31,10 @@ const Application = () => {
 };
 
 ReactDOM.render(
-  // <React.StrictMode>
-  <Application />,
-  // </React.StrictMode>,
+  <React.StrictMode>
+    <Router basename="https://saviour1001.github.io/draft-deploy">
+      <Application />
+    </Router>
+  </React.StrictMode>,
   document.getElementById("root")
 );
