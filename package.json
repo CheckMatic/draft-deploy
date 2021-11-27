@@ -11,7 +11,7 @@
     "@walletconnect/web3-provider": "^1.6.6",
     "antd": "^4.16.13",
     "chess.js": "^0.12.0",
-    "konva": "6.0.0",
+    "konva": "8.3.0",
     "moralis": "^0.0.135",
     "react": "^17.0.2",
     "react-blockies": "^1.4.1",

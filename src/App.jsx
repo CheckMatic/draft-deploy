@@ -5,6 +5,7 @@ import {
   Switch,
   Route,
   Redirect,
+  HashRouter,
 } from "react-router-dom";
 import Account from "components/Account";
 import Chains from "components/Chains";

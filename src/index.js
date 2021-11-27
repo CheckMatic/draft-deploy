@@ -16,11 +16,11 @@ const Application = () => {
   if (isServerInfo)
     return (
       <React.StrictMode>
-        <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
-          <HashRouter>
+        <HashRouter>
+          <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
             <App isServerInfo />
-          </HashRouter>
-        </MoralisProvider>
+          </MoralisProvider>
+        </HashRouter>
       </React.StrictMode>
     );
   else {
