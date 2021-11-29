@@ -356,10 +356,10 @@ const ChessGameWrapper = (props) => {
               marginTop: String(window.innerHeight / 8) + "px",
             }}
           >
-            Hey <strong>{props.myUserName}</strong>, copy and paste the URL
-            below to send to your friend:
+            Hey <strong>{props.myUserName}</strong>, copy and paste the URL of
+            this page and send it to your friend:
           </h1>
-          <textarea
+          {/* <textarea
             style={{
               marginLeft: String(window.innerWidth / 2 - 290) + "px",
               marginTop: "30" + "px",
@@ -372,7 +372,7 @@ const ChessGameWrapper = (props) => {
             }}
             value={domainName + "/game/" + gameid}
             type="text"
-          ></textarea>
+          ></textarea> */}
           <br></br>
 
           <h1 style={{ textAlign: "center", marginTop: "100px" }}>

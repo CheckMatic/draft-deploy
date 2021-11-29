@@ -1,6 +1,23 @@
-import { Card, Timeline, Typography } from "antd";
+import { Timeline, Typography } from "antd";
 import React, { useMemo } from "react";
 import { useMoralis } from "react-moralis";
+import Button from "react-bootstrap/Button";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Carousel from "react-bootstrap/Carousel";
+import Card from "react-bootstrap/Card";
+import Badge from "react-bootstrap/Badge";
+import sliderOne from "img/slider-1.jpg";
+import Table from "react-bootstrap/Table";
+import thumb from "img/thumb.jpeg";
+import chessimg from "img/chess.jpeg";
+import { NavLink } from "react-router-dom";
+import InchDex from "components/InchDex";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
 const { Text } = Typography;
 
@@ -25,180 +42,286 @@ const styles = {
 export default function QuickStart({ isServerInfo }) {
   const { Moralis } = useMoralis();
 
-  const isInchDex = useMemo(() => (Moralis.Plugins?.oneInch ? true : false), [Moralis.Plugins?.oneInch]);
+  const isInchDex = useMemo(
+    () => (Moralis.Plugins?.oneInch ? true : false),
+    [Moralis.Plugins?.oneInch]
+  );
 
   return (
-    <div style={{ display: "flex", gap: "10px" }}>
-      <Card
-        style={styles.card}
-        title={
-          <>
-            📝 <Text strong>To-Do List</Text>
-          </>
-        }
+    <div>
+      <h1
+        style={{ fontSize: "50px", textAlign: "center", paddingBottom: "20px" }}
       >
-        <Timeline mode="left" style={styles.timeline}>
-          <Timeline.Item dot="📄">
-            <Text delete style={styles.text}>
-              Clone or fork{" "}
-              <a
-                href="https://github.com/ethereum-boilerplate/ethereum-boilerplate#-quick-start"
-                target="_blank"
-                rel="noopener noreferrer"
+        Play Chess like Never Before!
+      </h1>
+
+      <span
+        style={{
+          display: "table-cell",
+          fontSize: "20px",
+          textAlign: "center",
+          width: "50%",
+        }}
+      >
+        are you good enough at chess? showcase your skills with the best players
+        out there and earn in crypto if you win!
+      </span>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "25px",
+          marginBottom: "25px",
+        }}
+      >
+        <NavLink to="/chess">
+          <Button variant="success" style={{ margin: "10px" }}>
+            Play Normal
+          </Button>{" "}
+        </NavLink>
+        <Button variant="warning" style={{ margin: "10px" }}>
+          Play with Crypto
+        </Button>{" "}
+      </div>
+
+      <div style={{ marginTop: "20px" }}>
+        <img src={thumb} style={{ width: "100%", paddingTop: "25px" }} />
+      </div>
+
+      <h1
+        style={{ fontWeight: "800", textAlign: "center", paddingTop: "50px" }}
+      >
+        Put Your Skills to Test!
+      </h1>
+      <p
+        style={{
+          fontWeight: "400",
+          paddingTop: "25px",
+          paddingBottom: "25px",
+          textAlign: "center",
+        }}
+      >
+        stake you crypto with you opponent living on the other side of the world
+        and play the beautiful and competitive game of chess on the Ethereum
+        Network, bet on your skillset and Earn in Crypto if you win!
+      </p>
+
+      <hr></hr>
+      <Table style={{ marginTop: "50px", textAlign: "center" }}>
+        <tbody>
+          <tr style={{ backgroundColor: "white" }}>
+            <td>
+              <h1
+                style={{
+                  color: "black",
+                  textAlign: "left",
+                  paddingBottom: "15px",
+                  paddingLeft: "50%",
+                  paddingTop: "20px",
+                }}
               >
-                ethereum-boilerplate
-              </a>{" "}
-            </Text>
-          </Timeline.Item>
-
-          <Timeline.Item dot="💿">
-            <Text delete style={styles.text}>
-              Install all dependencies: <Text code>npm install</Text>
-            </Text>
-          </Timeline.Item>
-
-          <Timeline.Item dot="🧰">
-            <Text delete={isServerInfo} style={styles.text}>
-              Sign up for a free account on{" "}
-              <a
-                href="https://moralis.io?utm_source=boilerplatehosted&utm_medium=todo&utm_campaign=ethereum-boilerplate"
-                target="_blank"
-                rel="noopener noreferrer"
+                <Badge pill bg="success">
+                  How does it work?
+                </Badge>
+              </h1>
+              <p
+                style={{
+                  color: "black",
+                  fontWeight: "400",
+                  textAlign: "left",
+                  paddingLeft: "50%",
+                }}
               >
-                Moralis
-              </a>
-            </Text>
-          </Timeline.Item>
+                🔗 Connect Your Metamask Wallet<br></br>
+                🎮 Click on Play with Crypto<br></br>
+                💲 Sign and Stake Your Tokens<br></br>
+                👑 Winners Take it All
+              </p>
+            </td>
 
-          <Timeline.Item dot="💾">
-            <Text delete={isServerInfo} style={styles.text}>
-              Create a Moralis Server (
-              <a
-                href="https://docs.moralis.io/moralis-server/getting-started/create-a-moralis-server"
-                target="_blank"
-                rel="noopener noreferrer"
+            <td>
+              <img
+                src={chessimg}
+                style={{ alignItems: "right" }}
+                height="250px"
+                width="350px"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+      <hr></hr>
+      <h1
+        style={{
+          marginTop: "50px",
+          marginLeft: "15%",
+          marginRight: "15%",
+          color: "black",
+          textAlign: "center",
+          paddingBottom: "15px",
+          backgroundColor: "orange",
+          padding: "10px",
+          borderRadius: "5px",
+          color: "white",
+        }}
+      >
+        Chess + Crypto = Thrill & Competitiveness
+      </h1>
+      <p
+        style={{
+          paddingLeft: "25%",
+          paddingRight: "25%",
+          paddingTop: "50px",
+          paddingBottom: "40px",
+          textAlign: "center",
+        }}
+      >
+        Compete with Players Globally in an Intellectually Stimulating Game of
+        Chess, Stake Your Tokens and experience the thrill and intensity of the
+        Game! With our Advance matchmaking algorithm get connected with the
+        right opponent and enjoy playing Chess
+      </p>
+      <Table
+        striped
+        bordered
+        style={{ marginTop: "20px", textAlign: "center" }}
+      >
+        <tbody>
+          <tr>
+            <td>
+              <div
+                style={{
+                  display: "block",
+                  backgroundColor: "black",
+                  padding: "20px",
+                  color: "white",
+                }}
               >
-                How to start Moralis Server
-              </a>
-              )
-            </Text>
-          </Timeline.Item>
+                <h1 style={{ color: "white" }}>Play Online</h1>
+                <p></p>
+              </div>
+            </td>
 
-          <Timeline.Item dot="🔏">
-            <Text delete={isServerInfo} style={styles.text}>
-              Rename <Text code>.env.example</Text> to <Text code>.env</Text> and provide your <Text strong>appId</Text>{" "}
-              and <Text strong>serverUrl</Text> from{" "}
-              <a
-                href="https://moralis.io?utm_source=boilerplatehosted&utm_medium=todo&utm_campaign=ethereum-boilerplate"
-                target="_blank"
-                rel="noopener noreferrer"
+            <td>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "20px",
+                  color: "black",
+                }}
               >
-                Moralis
-              </a>
-              :
-            </Text>
-            <Text code delete={isServerInfo} style={{ display: "block" }}>
-              REACT_APP_MORALIS_APPLICATION_ID = xxxxxxxxxxxx
-            </Text>
-            <Text code delete={isServerInfo} style={{ display: "block" }}>
-              REACT_APP_MORALIS_SERVER_URL = https://xxxxxx.grandmoralis.com:2053/server
-            </Text>
-          </Timeline.Item>
+                <h1 style={{ color: "black" }}>Find Opponents</h1>
+                <p></p>
+              </div>
+            </td>
 
-          <Timeline.Item dot="🔁">
-            <Text delete={isServerInfo} style={styles.text}>
-              Stop the app and start it again <Text code>npm run start</Text>
-            </Text>
-          </Timeline.Item>
-
-          <Timeline.Item dot="💿">
-            <Text delete={isInchDex} style={styles.text}>
-              Install{" "}
-              <a
-                href="https://moralis.io/plugins/1inch/?utm_source=boilerplatehosted&utm_medium=todo&utm_campaign=ethereum-boilerplate"
-                target="_blank"
-                rel="noopener noreferrer"
+            <td>
+              <div
+                style={{
+                  backgroundColor: "black",
+                  padding: "20px",
+                  color: "white",
+                }}
               >
-                1inch Moralis Plugin
-              </a>{" "}
-              needed for the<Text code>{"<InchDex />"}</Text> component (optional)
-            </Text>
-          </Timeline.Item>
+                <h1 style={{ color: "white" }}>Stake Your Crypto</h1>
+                <p></p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div
+                style={{
+                  display: "block",
+                  backgroundColor: "white",
+                  padding: "20px",
+                  color: "black",
+                }}
+              >
+                <h1 style={{ color: "black" }}>Built on Ethereum</h1>
+                <p></p>
+              </div>
+            </td>
 
-          <Timeline.Item dot="🚀">
-            <Text style={styles.text}>BUIDL!!!</Text>
-          </Timeline.Item>
-        </Timeline>
-      </Card>
-      <div>
-        <Card
-          style={styles.card}
-          title={
-            <>
-              💣 <Text strong>Starting Local Chain (optional)</Text>
-            </>
-          }
-        >
-          <Timeline mode="left" style={styles.timeline}>
-            <Timeline.Item dot="💿">
-              <Text style={styles.text}>
-                Install{" "}
-                <a target="_blank" rel="noopener noreferrer" href="https://www.npmjs.com/package/truffle">
-                  Truffle
-                </a>{" "}
-                and{" "}
-                <a target="_blank" rel="noopener noreferrer" href="https://www.npmjs.com/package/ganache-cli">
-                  ganache-cli
-                </a>{" "}
-                <Text code>npm install -g ganache-cli truffle</Text>
-              </Text>
-            </Timeline.Item>
-            <Timeline.Item dot="⚙️">
-              <Text style={styles.text}>
-                Start you local devchain: <Text code>npm run devchain</Text> on a new terminal
-              </Text>
-            </Timeline.Item>
-            <Timeline.Item dot="📡">
-              <Text style={styles.text}>
-                Deploy test contract: <Text code>npm run deploy</Text> on a new terminal
-              </Text>
-            </Timeline.Item>
-            <Timeline.Item dot="✅" style={styles.text}>
-              <Text>
-                Open the 📄<Text strong> Contract</Text> tab
-              </Text>
-            </Timeline.Item>
-          </Timeline>
+            <td>
+              <div
+                style={{
+                  backgroundColor: "black",
+                  padding: "20px",
+                  color: "white",
+                }}
+              >
+                <h1 style={{ color: "white" }}>Mint NFT's</h1>
+                <p></p>
+              </div>
+            </td>
+
+            <td>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "20px",
+                  color: "black",
+                }}
+              >
+                <h1 style={{ color: "black" }}>Play over Video</h1>
+                <p></p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "25px",
+          marginBottom: "25px",
+        }}
+      >
+        <Button variant="warning" style={{ margin: "10px", fontWeight: "600" }}>
+          Stake Your Crypto & Play Now!
+        </Button>{" "}
+      </div>
+
+      <hr></hr>
+
+      <div className="d-flex justify-content-around">
+        <Card style={{ width: "18rem" }}>
+          <Card.Img variant="top" src="" />
+          <Card.Body>
+            <Card.Title>About Us</Card.Title>
+            <Card.Text>
+              Learn about our Purpose and Vision behind building CheckMatic
+            </Card.Text>
+            <Button variant="primary">Learn More</Button>
+          </Card.Body>
         </Card>
-        <Card
-          style={{ marginTop: "10px", ...styles.card }}
-          title={
-            <>
-              📡 <Text strong> Connecting your Local Chain to the Moralis DB</Text>
-            </>
-          }
-        >
-          <Timeline mode="left" style={styles.timeline}>
-            <Timeline.Item dot="💿">
-              <Text style={styles.text}>
-                Download{" "}
-                <a target="_blank" rel="noopener noreferrer" href="https://github.com/fatedier/frp/releases">
-                  frpc
-                </a>{" "}
-                and provide missing params in the <Text code>.env</Text> file
-              </Text>
-            </Timeline.Item>
-            <Timeline.Item dot="⚙️">
-              <Text style={styles.text}>
-                Connect your Moralis Database and Local Chain: <Text code>npm run connect</Text>
-              </Text>
-            </Timeline.Item>
-            <Timeline.Item dot="💾">
-              <Text style={styles.text}>
-                Add contract events you want to watch: <Text code>npm run watch:events</Text>
-              </Text>
-            </Timeline.Item>
-          </Timeline>
+
+        <Card style={{ width: "18rem" }}>
+          <Card.Img variant="top" src="" />
+          <Card.Body>
+            <Card.Title>DEX</Card.Title>
+            <Card.Text>
+              We have partnered with 1Inch to provide you access to Swaps
+            </Card.Text>
+            <Button variant="primary">Swap Now</Button>
+          </Card.Body>
+        </Card>
+
+        <Card style={{ width: "18rem" }}>
+          <Card.Img variant="top" src="" />
+          <Card.Body>
+            <Card.Title>Balances</Card.Title>
+            <Card.Text>
+              Get to know the number of tokens in your Connected Web3 Wallet
+            </Card.Text>
+            <Button variant="primary">Check Now</Button>
+          </Card.Body>
         </Card>
       </div>
     </div>
