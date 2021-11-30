@@ -195,13 +195,6 @@ const App = ({ isServerInfo }) => {
                   )}
                 </Route>
               </ColorContext.Provider>
-              {/* <CryptoColorContext.Provider
-                value={{
-                  didRedirect: didRedirect,
-                  playerDidRedirect: playerDidRedirect,
-                  playerDidNotRedirect: playerDidNotRedirect,
-                }}
-              ></CryptoColorContext.Provider> */}
             </Switch>
           )}
         </div>

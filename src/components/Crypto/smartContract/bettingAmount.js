@@ -27,7 +27,10 @@ function BettingAmount() {
       <button
         onClick={() => {
           if (bet > 0 && bet < balance.formatted) {
-            initGameWhite(bet);
+            initGameWhite(bet).then((res) => {
+              window.location.href =
+                "http://localhost:3000/cryptochess#/cryptochess";
+            });
           } else {
             alert("Please enter a valid amount");
           }
