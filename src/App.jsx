@@ -24,12 +24,22 @@ import Contract from "components/Contract/Contract";
 import Text from "antd/lib/typography/Text";
 import Ramper from "components/Ramper";
 import MenuItems from "./components/MenuItems";
+
+// Chess Game
 import React from "react";
 import JoinRoom from "./components/onboard/joinroom";
 import { ColorContext } from "./components/context/colorcontext";
 import Onboard from "./components/onboard/onboard";
 import JoinGame from "./components/onboard/joingame";
 import ChessGame from "./components/chess/ui/chessgame";
+
+// Crypto Chess Game
+import CryptoJoinRoom from "components/Crypto/onboard/joinroom";
+import { CryptoColorContext } from "components/Crypto/context/colorcontext";
+import CryptoOnboard from "components/Crypto/onboard/onboard";
+import CryptoJoinGame from "components/Crypto/onboard/joingame";
+import CryptoChessGame from "components/Crypto/chess/ui/chessgame";
+import BettingAmount from "components/Crypto/smartContract/bettingAmount";
 
 const { Header, Footer } = Layout;
 
@@ -155,6 +165,9 @@ const App = ({ isServerInfo }) => {
                   playerDidNotRedirect: playerDidNotRedirect,
                 }}
               >
+                <Route exact path="/setbet">
+                  <BettingAmount />
+                </Route>
                 <Route exact path="/chess">
                   <Onboard setUserName={setUserName} />
                 </Route>
@@ -168,7 +181,27 @@ const App = ({ isServerInfo }) => {
                     <JoinRoom />
                   )}
                 </Route>
+                <Route exact path="/cryptochess">
+                  <CryptoOnboard setUserName={setUserName} />
+                </Route>
+                <Route exact path="/crypto/:gameid">
+                  {didRedirect ? (
+                    <React.Fragment>
+                      <CryptoJoinGame userName={userName} isCreator={true} />
+                      <CryptoChessGame myUserName={userName} />
+                    </React.Fragment>
+                  ) : (
+                    <CryptoJoinRoom />
+                  )}
+                </Route>
               </ColorContext.Provider>
+              {/* <CryptoColorContext.Provider
+                value={{
+                  didRedirect: didRedirect,
+                  playerDidRedirect: playerDidRedirect,
+                  playerDidNotRedirect: playerDidNotRedirect,
+                }}
+              ></CryptoColorContext.Provider> */}
             </Switch>
           )}
         </div>

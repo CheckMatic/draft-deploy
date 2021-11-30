@@ -1,0 +1,242 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_boardNumber",
+        "type": "uint256"
+      }
+    ],
+    "name": "GameID",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_boardNumber",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_whitePlayer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_blackPlayer",
+        "type": "address"
+      }
+    ],
+    "name": "GameStarted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_boardNumber",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_winnerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "GameWinner",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "Games",
+    "outputs": [
+      {
+        "internalType": "enum CheckMatic.GameState",
+        "name": "currState",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "isWhiteIn",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "isBlackIn",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "bet",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "whitePaidTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "gameStartedTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address payable",
+        "name": "white_address",
+        "type": "address"
+      },
+      {
+        "internalType": "address payable",
+        "name": "black_address",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "game_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "blackDeposit",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "game_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "blackWon",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "curr_id",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "game_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "initGameBlack",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_bettingAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "initGameWhite",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "game_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "releaseAllFunds",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "game_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "whiteDeposit",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "game_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "whiteWithdraw",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "game_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "whiteWon",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  }
+]

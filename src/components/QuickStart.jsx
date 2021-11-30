@@ -81,9 +81,11 @@ export default function QuickStart({ isServerInfo }) {
             Play Normal
           </Button>{" "}
         </NavLink>
-        <Button variant="warning" style={{ margin: "10px" }}>
-          Play with Crypto
-        </Button>{" "}
+        <NavLink to="/setbet">
+          <Button variant="warning" style={{ margin: "10px" }}>
+            Play with Crypto
+          </Button>{" "}
+        </NavLink>
       </div>
 
       <div style={{ marginTop: "20px" }}>
