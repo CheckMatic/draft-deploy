@@ -28,21 +28,11 @@ class CryptoJoinRoom extends React.Component {
     });
   };
 
-  displayBoardNumber = () => {
-    socket.on("boardNumber", (data) => {
-      alert(data);
-    });
-  };
-
   render() {
     return (
       <React.Fragment>
         {this.state.didGetUserName ? (
           <React.Fragment>
-            {/* call the function to get the board number */}
-            <button onClick={this.displayBoardNumber}>
-              Display Board Number
-            </button>
             <CryptoJoinGame userName={this.state.inputText} isCreator={false} />
             <CryptoChessGame myUserName={this.state.inputText} />
           </React.Fragment>
@@ -83,7 +73,8 @@ class CryptoJoinRoom extends React.Component {
                   didGetUserName: true,
                 });
                 socket.on("boardNumber", (data) => {
-                  alert(data);
+                  // alert(data);
+                  console.log(data);
                 });
               }}
             >

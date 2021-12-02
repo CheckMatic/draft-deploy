@@ -114,7 +114,8 @@ class CryptoCreateNewGame extends React.Component {
                   didGetUserName: true,
                 });
                 socket.on("boardNumber", (data) => {
-                  alert(data);
+                  // alert(data);
+                  console.log(data);
                 });
                 this.send();
               }}

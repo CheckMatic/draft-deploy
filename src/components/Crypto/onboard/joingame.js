@@ -24,7 +24,8 @@ const CryptoJoinGameRoom = (gameid, userName, isCreator) => {
   socket.emit("playerJoinGame", idData);
   // get the boardNumber from the server
   socket.on("boardNumber", (data) => {
-    alert(data);
+    // alert(data);
+    console.log(data);
   });
 };
 

@@ -265,6 +265,26 @@ const CryptoChessGameWrapper = (props) => {
   const [opponentUserName, setUserName] = React.useState("");
   const [gameSessionDoesNotExist, doesntExist] = React.useState(false);
 
+  const getBoardNumber = () => {
+    var decoded_cookie = decodeURIComponent(document.cookie);
+    var ca = decoded_cookie.split(";");
+
+    var boardNumber = "";
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf("boardNumber") == 0) {
+        boardNumber = c.substring(12, c.length);
+      }
+    }
+
+    socket.emit("boardNumber", boardNumber);
+
+    return boardNumber;
+  };
+
   React.useEffect(() => {
     socket.on("playerJoinedRoom", (statusUpdate) => {
       console.log(
@@ -293,6 +313,11 @@ const CryptoChessGameWrapper = (props) => {
 
     socket.on("start game", (opponentUserName) => {
       console.log("START!");
+      socket.on("boardNumber", (data) => {
+        // alert(data);
+        // console.log(data);
+        document.cookie = "black=" + data;
+      });
       if (opponentUserName !== props.myUserName) {
         setUserName(opponentUserName);
         didJoinGame(true);
@@ -311,6 +336,7 @@ const CryptoChessGameWrapper = (props) => {
           userName: props.myUserName,
           gameId: gameid,
         });
+        socket.emit("boardNumber", getBoardNumber());
       }
     });
 
@@ -320,7 +346,8 @@ const CryptoChessGameWrapper = (props) => {
         console.log("data.socketId: data.socketId");
         setOpponentSocketId(data.socketId);
         socket.on("boardNumber", (data) => {
-          alert(data);
+          // alert(data);
+          console.log("boardNumber: " + data);
         });
         didJoinGame(true);
       }
