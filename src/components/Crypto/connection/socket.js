@@ -16,6 +16,7 @@ socket.on("createNewGame", async (statusUpdate) => {
       " Socket id: " +
       statusUpdate.mySocketId
   );
+  console.log(statusUpdate);
   mySocketId = await statusUpdate.mySocketId;
 });
 

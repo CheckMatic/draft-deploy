@@ -19,7 +19,8 @@ export const useSmartContract = () => {
       })
       .then((res) => {
         console.log(res);
-        return res.events.GameID.returnValues._boardNumber;
+        var boardNumber = res.events.GameID.returnValues._boardNumber;
+        document.cookie = `boardNumber=${boardNumber}`;
       });
   };
 

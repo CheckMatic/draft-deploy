@@ -22,6 +22,10 @@ const CryptoJoinGameRoom = (gameid, userName, isCreator) => {
     isCreator: isCreator,
   };
   socket.emit("playerJoinGame", idData);
+  // get the boardNumber from the server
+  socket.on("boardNumber", (data) => {
+    alert(data);
+  });
 };
 
 const CryptoJoinGame = (props) => {

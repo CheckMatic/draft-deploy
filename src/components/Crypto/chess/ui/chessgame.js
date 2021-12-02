@@ -319,6 +319,9 @@ const CryptoChessGameWrapper = (props) => {
         setUserName(data.userName);
         console.log("data.socketId: data.socketId");
         setOpponentSocketId(data.socketId);
+        socket.on("boardNumber", (data) => {
+          alert(data);
+        });
         didJoinGame(true);
       }
     });

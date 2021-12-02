@@ -1,6 +1,7 @@
 import React from "react";
 import CryptoJoinGame from "./joingame";
 import CryptoChessGame from "../chess/ui/chessgame";
+const socket = require("../connection/socket").socket;
 
 /**
  * Onboard is where we create the game room.
@@ -27,11 +28,21 @@ class CryptoJoinRoom extends React.Component {
     });
   };
 
+  displayBoardNumber = () => {
+    socket.on("boardNumber", (data) => {
+      alert(data);
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
         {this.state.didGetUserName ? (
           <React.Fragment>
+            {/* call the function to get the board number */}
+            <button onClick={this.displayBoardNumber}>
+              Display Board Number
+            </button>
             <CryptoJoinGame userName={this.state.inputText} isCreator={false} />
             <CryptoChessGame myUserName={this.state.inputText} />
           </React.Fragment>
@@ -70,6 +81,9 @@ class CryptoJoinRoom extends React.Component {
                 // the uuid we generate here.
                 this.setState({
                   didGetUserName: true,
+                });
+                socket.on("boardNumber", (data) => {
+                  alert(data);
                 });
               }}
             >
