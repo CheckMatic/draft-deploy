@@ -29,7 +29,7 @@ function BettingAmount() {
           if (bet > 0 && bet < balance.formatted) {
             initGameWhite(bet).then((res) => {
               window.location.href =
-                "http://localhost:3000/cryptochess#/cryptochess";
+                "https://checkmatic.github.io/draft-deploy/cryptochess#/cryptochess";
             });
           } else {
             alert("Please enter a valid amount");
