@@ -24,7 +24,28 @@ export const useSmartContract = () => {
       });
   };
 
+  // get game state of the current board number
+  const getGameState = async (boardNumber) => {
+    await window.ethereum.enable();
+    var CheckMatic = new web3.eth.Contract(ABI, contractAddress);
+    const currentUser = user.attributes.ethAddress;
+    const id = await CheckMatic.methods
+      .Games(boardNumber)
+      .call({
+        from: currentUser,
+      })
+      .then(async (res) => {
+        console.log(res);
+        const json = JSON.stringify(res);
+        const parsed = JSON.parse(json);
+        console.log("Parsed: ", parsed.bet);
+        document.cookie = `bet=${Moralis.Units.FromWei(parsed.bet)}`;
+        return await parsed.bet;
+      });
+  };
+
   return {
     initGameWhite,
+    getGameState,
   };
 };

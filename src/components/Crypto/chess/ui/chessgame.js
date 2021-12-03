@@ -10,6 +10,9 @@ import piecemap from "./piecemap";
 import { useParams } from "react-router-dom";
 import { ColorContext } from "components/context/colorcontext";
 import VideoChatApp from "../../connection/videochat";
+import { useSmartContract } from "hooks/useSmartContract";
+import { Button } from "react-bootstrap";
+
 const socket = require("../../connection/socket").socket;
 
 class CryptoChessGame extends React.Component {
@@ -264,6 +267,17 @@ const CryptoChessGameWrapper = (props) => {
   const [opponentDidJoinTheGame, didJoinGame] = React.useState(false);
   const [opponentUserName, setUserName] = React.useState("");
   const [gameSessionDoesNotExist, doesntExist] = React.useState(false);
+  const { getGameState } = useSmartContract();
+  const [boardNumber, setBoardNumber] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const getBoardNumber = () => {
     var decoded_cookie = decodeURIComponent(document.cookie);
@@ -283,6 +297,27 @@ const CryptoChessGameWrapper = (props) => {
     socket.emit("boardNumber", boardNumber);
 
     return boardNumber;
+  };
+
+  const getBoardNumberForBlack = () => {
+    var decoded_cookie = decodeURIComponent(document.cookie);
+    var ca = decoded_cookie.split(";");
+
+    var boardNumber = "";
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf("black") == 0) {
+        boardNumber = c.substring(6, c.length);
+      }
+    }
+
+    console.log("boardNumber: " + boardNumber);
+
+    setBoardNumber(boardNumber);
+    return Number(boardNumber);
   };
 
   React.useEffect(() => {
@@ -358,6 +393,16 @@ const CryptoChessGameWrapper = (props) => {
     <React.Fragment>
       {opponentDidJoinTheGame ? (
         <div>
+          Asking Black player to join the game...
+          <Button
+            onClick={async () => {
+              await getBoardNumberForBlack();
+              const matchDetails = await getGameState(Number(boardNumber));
+              console.log(matchDetails);
+            }}
+          >
+            Get Game State
+          </Button>
           <h4> Opponent: {opponentUserName} </h4>
           <div style={{ display: "flex" }}>
             <CryptoChessGame
