@@ -12,6 +12,11 @@ import { ColorContext } from "components/context/colorcontext";
 import VideoChatApp from "../../connection/videochat";
 import { useSmartContract } from "hooks/useSmartContract";
 import { Button } from "react-bootstrap";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Dialog from "@material-ui/core/Dialog";
 
 const socket = require("../../connection/socket").socket;
 
@@ -115,9 +120,14 @@ class CryptoChessGame extends React.Component {
     });
 
     if (blackCheckmated) {
-      alert("WHITE WON BY CHECKMATE!");
+      alert(
+        "WHITE WON BY CHECKMATE! Accept the transaction to claim rewards!!"
+      );
+      // Call the function to claim the reward
     } else if (whiteCheckmated) {
-      alert("BLACK WON BY CHECKMATE!");
+      alert(
+        "BLACK WON BY CHECKMATE! Accept the transaction to claim rewards!!"
+      );
     }
   };
 
@@ -267,9 +277,18 @@ const CryptoChessGameWrapper = (props) => {
   const [opponentDidJoinTheGame, didJoinGame] = React.useState(false);
   const [opponentUserName, setUserName] = React.useState("");
   const [gameSessionDoesNotExist, doesntExist] = React.useState(false);
-  const { getGameState } = useSmartContract();
+  const {
+    getGameState,
+    initGameBlack,
+    whiteDeposit,
+    whiteWithdraw,
+    blackDeposit,
+    whiteWon,
+    blackWon,
+  } = useSmartContract();
   const [boardNumber, setBoardNumber] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [bet, setBet] = React.useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -318,6 +337,28 @@ const CryptoChessGameWrapper = (props) => {
 
     setBoardNumber(boardNumber);
     return Number(boardNumber);
+  };
+
+  const getBet = () => {
+    var decoded_cookie = decodeURIComponent(document.cookie);
+    var ca = decoded_cookie.split(";");
+
+    var bet = "";
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf("bet") == 0) {
+        bet = c.substring(4, c.length);
+      }
+
+      console.log("bet: " + bet);
+    }
+
+    setBet(Number(bet));
+
+    return Number(bet);
   };
 
   React.useEffect(() => {
@@ -397,11 +438,74 @@ const CryptoChessGameWrapper = (props) => {
           <Button
             onClick={async () => {
               await getBoardNumberForBlack();
-              const matchDetails = await getGameState(Number(boardNumber));
-              console.log(matchDetails);
+              await getGameState(Number(boardNumber));
+              await getBet();
             }}
           >
             Get Game State
+          </Button>
+          <div>
+            <Button onClick={handleClickOpen}>Open My Custom Dialog</Button>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Greetings from CheckMatic</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Do you accept the challenge of playing against{" "}
+                  {opponentUserName}? Matic on Stake :{bet}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Close</Button>
+                <Button
+                  onClick={async () => {
+                    handleClose();
+                    initGameBlack(Number(boardNumber));
+                  }}
+                >
+                  Yes
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+          <br />
+          <Button
+            onClick={async () => {
+              whiteDeposit(Number(boardNumber), Number(bet));
+            }}
+          >
+            White Deposit
+          </Button>
+          <br />
+          <Button
+            onClick={async () => {
+              blackDeposit(Number(boardNumber), Number(bet));
+            }}
+          >
+            Black Deposit
+          </Button>
+          <br />
+          <Button
+            onClick={async () => {
+              whiteWithdraw(Number(boardNumber));
+            }}
+          >
+            White Withdraw
+          </Button>
+          <br />
+          <Button
+            onClick={async () => {
+              whiteWon(Number(boardNumber));
+            }}
+          >
+            Claim Button for white
+          </Button>
+          <br />
+          <Button
+            onClick={async () => {
+              blackWon(Number(boardNumber));
+            }}
+          >
+            Claim Button for black
           </Button>
           <h4> Opponent: {opponentUserName} </h4>
           <div style={{ display: "flex" }}>

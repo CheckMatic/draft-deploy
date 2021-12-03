@@ -44,8 +44,122 @@ export const useSmartContract = () => {
       });
   };
 
+  // Initialize Game as Black (1)
+  const initGameBlack = async (boardNumber) => {
+    await window.ethereum.enable();
+    var CheckMatic = new web3.eth.Contract(ABI, contractAddress);
+    const currentUser = user.attributes.ethAddress;
+    const id = await CheckMatic.methods
+      .initGameBlack(boardNumber)
+      .send({
+        from: currentUser,
+      })
+      .then((res) => {
+        console.log("Both Players joined " + boardNumber + " board ");
+      });
+  };
+
+  // White Deposit to the contract
+  const whiteDeposit = async (boardNumber, amount) => {
+    await window.ethereum.enable();
+    var CheckMatic = new web3.eth.Contract(ABI, contractAddress);
+    const currentUser = user.attributes.ethAddress;
+    const id = await CheckMatic.methods
+      .whiteDeposit(boardNumber)
+      .send({
+        from: currentUser,
+        value: Moralis.Units.ETH(amount),
+      })
+      .then((res) => {
+        console.log("White deposited " + amount + " to the contract");
+      });
+  };
+
+  // Black Deposit to the contract
+  const blackDeposit = async (boardNumber, amount) => {
+    await window.ethereum.enable();
+    var CheckMatic = new web3.eth.Contract(ABI, contractAddress);
+    const currentUser = user.attributes.ethAddress;
+    const id = await CheckMatic.methods
+      .blackDeposit(boardNumber)
+      .send({
+        from: currentUser,
+        value: Moralis.Units.ETH(amount),
+      })
+      .then((res) => {
+        console.log("Black deposited " + amount + " to the contract");
+      });
+  };
+
+  // White Withdraw from the contract
+  const whiteWithdraw = async (boardNumber) => {
+    await window.ethereum.enable();
+    var CheckMatic = new web3.eth.Contract(ABI, contractAddress);
+    const currentUser = user.attributes.ethAddress;
+    const id = await CheckMatic.methods
+      .whiteWithdraw(boardNumber)
+      .send({
+        from: currentUser,
+      })
+      .then((res) => {
+        console.log("White withdrew from the contract");
+      });
+  };
+
+  // White Won
+  const whiteWon = async (boardNumber) => {
+    await window.ethereum.enable();
+    var CheckMatic = new web3.eth.Contract(ABI, contractAddress);
+    const currentUser = user.attributes.ethAddress;
+    const id = await CheckMatic.methods
+      .whiteWon(boardNumber)
+      .send({
+        from: currentUser,
+      })
+      .then((res) => {
+        console.log("White won the game");
+      });
+  };
+
+  // Black Won
+  const blackWon = async (boardNumber) => {
+    await window.ethereum.enable();
+    var CheckMatic = new web3.eth.Contract(ABI, contractAddress);
+    const currentUser = user.attributes.ethAddress;
+    const id = await CheckMatic.methods
+      .blackWon(boardNumber)
+      .send({
+        from: currentUser,
+      })
+      .then((res) => {
+        console.log("Black won the game");
+      });
+  };
+
+  // Release all funds
+  const releaseAllFunds = async (boardNumber) => {
+    await window.ethereum.enable();
+    var CheckMatic = new web3.eth.Contract(ABI, contractAddress);
+    const currentUser = user.attributes.ethAddress;
+    const id = await CheckMatic.methods
+      .releaseAllFunds(boardNumber)
+      .send({
+        from: currentUser,
+      })
+      .then((res) => {
+        console.log("All funds released");
+      });
+  };
+
   return {
     initGameWhite,
     getGameState,
+    initGameBlack,
+    whiteDeposit,
+    blackDeposit,
+    whiteWithdraw,
+    whiteWon,
+    blackWon,
+    releaseAllFunds,
   };
 };
