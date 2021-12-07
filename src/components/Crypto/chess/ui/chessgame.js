@@ -442,7 +442,7 @@ const CryptoChessGameWrapper = (props) => {
               await getBet();
             }}
           >
-            Get Game State
+            Get Game States
           </Button>
           <div>
             <Button onClick={handleClickOpen}>Open My Custom Dialog</Button>
