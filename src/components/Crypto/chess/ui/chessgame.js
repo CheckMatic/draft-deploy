@@ -125,11 +125,13 @@ class CryptoChessGame extends React.Component {
     });
 
     if (blackCheckmated) {
+      document.cookie = "winner=white";
       alert(
         "WHITE WON BY CHECKMATE! Accept the transaction to claim rewards!!"
       );
       // Call the function to claim the reward
     } else if (whiteCheckmated) {
+      document.cookie = "winner=black";
       alert(
         "BLACK WON BY CHECKMATE! Accept the transaction to claim rewards!!"
       );
@@ -464,6 +466,7 @@ const CryptoChessGameWrapper = (props) => {
   async function checkFunction(boardNumber) {
     await getGameState(Number(boardNumber));
     let state = getCookie("checkState");
+    let winner = getCookie("winner");
     console.log("checkState: " + state);
      if (state === "2") {
       setShowGameState(true);
@@ -486,7 +489,11 @@ const CryptoChessGameWrapper = (props) => {
       setShowBlackDeposit(true);
       setShowClaimButtonForWhite(true);
     } 
-
+    if (winner === "black") {
+      setShowClaimButtonForBlack(false);
+    } else if (winner === "white") {
+      setShowClaimButtonForWhite(false);
+    }
     if (state === "4") {
 
       return true;
@@ -523,7 +530,7 @@ const CryptoChessGameWrapper = (props) => {
       </div>
     );
   };
-  setInterval(checkFunction, 60000, boardNumber);
+  setInterval(checkFunction, 10000, boardNumber);
   const toast = useToast();
   
   // sleep function
@@ -686,7 +693,7 @@ const CryptoChessGameWrapper = (props) => {
           </Button>}
           <h4> Opponent: {opponentUserName} </h4>
           <div style={{ display: "flex" }}>
-            <LockScreen timeout={60000} ui={getLockScreenUi}>
+            {/* <LockScreen  ui={getLockScreenUi}> */}
               <CryptoChessGame
                 playAudio={play}
                 gameId={gameid}
@@ -698,7 +705,7 @@ const CryptoChessGameWrapper = (props) => {
                 myUserName={props.myUserName}
                 opponentUserName={opponentUserName}
               />
-            </LockScreen>
+            {/* </LockScreen> */}
           </div>
           <h4> You: {props.myUserName} </h4>
         </div>
