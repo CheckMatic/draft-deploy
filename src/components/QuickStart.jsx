@@ -242,7 +242,7 @@ export default function QuickStart({ isServerInfo }) {
                   color: "black",
                 }}
               >
-                <h1 style={{ color: "black" }}>Built on Ethereum</h1>
+                <h1 style={{ color: "black" }}>Built on Polygon & Moralis</h1>
                 <p></p>
               </div>
             </td>
@@ -285,9 +285,14 @@ export default function QuickStart({ isServerInfo }) {
           marginBottom: "25px",
         }}
       >
-        <Button variant="warning" style={{ margin: "10px", fontWeight: "600" }}>
-          Stake Your Crypto & Play Now!
-        </Button>{" "}
+        <NavLink to="/setbet">
+          <Button
+            variant="warning"
+            style={{ margin: "10px", fontWeight: "600" }}
+          >
+            Stake Your Crypto & Play Now!
+          </Button>{" "}
+        </NavLink>
       </div>
 
       <hr></hr>
@@ -311,7 +316,9 @@ export default function QuickStart({ isServerInfo }) {
             <Card.Text>
               We have partnered with 1Inch to provide you access to Swaps
             </Card.Text>
-            <Button variant="primary">Swap Now</Button>
+            <NavLink to="/1inch">
+              <Button variant="primary">Swap Now</Button>
+            </NavLink>
           </Card.Body>
         </Card>
 
@@ -322,7 +329,9 @@ export default function QuickStart({ isServerInfo }) {
             <Card.Text>
               Get to know the number of tokens in your Connected Web3 Wallet
             </Card.Text>
-            <Button variant="primary">Check Now</Button>
+            <NavLink to="/erc20balance">
+              <Button variant="primary">Check Now</Button>
+            </NavLink>
           </Card.Body>
         </Card>
       </div>
