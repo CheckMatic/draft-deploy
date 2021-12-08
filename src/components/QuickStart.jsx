@@ -11,6 +11,13 @@ import Table from "react-bootstrap/Table";
 import thumb from "img/thumb.jpeg";
 import chessimg from "img/chess.jpeg";
 import { NavLink } from "react-router-dom";
+import chessgif from "img/chesspawn.gif";
+import chessboard1 from "img/1.gif";
+import chessboard2 from "img/2.gif";
+import chessboard3 from "img/3.gif";
+import chessboard4 from "img/4.gif";
+import dboard from "img/3dboard.gif";
+
 import InchDex from "components/InchDex";
 import {
   BrowserRouter as Router,
@@ -48,10 +55,14 @@ export default function QuickStart({ isServerInfo }) {
   );
 
   return (
-    <div>
-      <h1
-        style={{ fontSize: "50px", textAlign: "center", paddingBottom: "20px" }}
-      >
+    
+    <div style={{fontFamily: "'Montserrat', sans-serif;" }}>
+      
+      <div style={{marginBottom:"50px",backgroundColor:"#22292f","display":"grid","gridTemplateColumns":"repeat(2, 1fr)","gridTemplateRows":"1fr","gridColumnGap":"10px","gridRowGap":"10px"}}>
+        <h1 style={{paddingTop: "25%", color:"white", paddingLeft:"100px", paddingRight:"50px", lineHeight:"1.6"}}>CheckMatic Adds Fun & Thrill to the Game of Chess using Crypto! <u>Stake, Play & Earn</u></h1>
+        <img src={chessgif} style={{marginTop: "10px", marginBottom:"10px"}} />
+      </div>
+       <h1 style={{ fontSize: "50px", textAlign: "center", paddingBottom: "20px" }}>
         Play Chess like Never Before!
       </h1>
 
@@ -61,11 +72,14 @@ export default function QuickStart({ isServerInfo }) {
           fontSize: "20px",
           textAlign: "center",
           width: "50%",
+          paddingBottom: "20px"
         }}
       >
         are you good enough at chess? showcase your skills with the best players
         out there and earn in crypto if you win!
       </span>
+
+      
 
       <div
         style={{
@@ -109,7 +123,15 @@ export default function QuickStart({ isServerInfo }) {
         and play the beautiful and competitive game of chess on the Ethereum
         Network, bet on your skillset and Earn in Crypto if you win!
       </p>
+      <div style={{"display":"grid","gridTemplateColumns":"repeat(4, 1fr)","gridTemplateRows":"1fr","gridColumnGap":"10px","gridRowGap":"10px"}}>
 
+<img src={chessboard1}  />
+<img src={chessboard3} />
+<img src={chessboard2}/>
+<img src={chessboard4} />
+
+
+</div>
       <hr></hr>
       <Table style={{ marginTop: "50px", textAlign: "center" }}>
         <tbody>
@@ -155,6 +177,7 @@ export default function QuickStart({ isServerInfo }) {
         </tbody>
       </Table>
       <hr></hr>
+      <div style={{backgroundColor:"white", margin:"10px", padding: "10px"}}>
       <h1
         style={{
           marginTop: "50px",
@@ -171,9 +194,13 @@ export default function QuickStart({ isServerInfo }) {
       >
         Chess + Crypto = Thrill & Competitiveness
       </h1>
+      <div style={{"display":"grid","gridTemplateColumns":"1fr 1.5fr","gridTemplateRows":"1fr","gridColumnGap":"10px","gridRowGap":"10px"}}>
+      
+      <img src={dboard} style={{paddingLeft: "30%", paddingTop:"10px"}}/>
+
       <p
         style={{
-          paddingLeft: "25%",
+          paddingLeft: "",
           paddingRight: "25%",
           paddingTop: "50px",
           paddingBottom: "40px",
@@ -185,6 +212,9 @@ export default function QuickStart({ isServerInfo }) {
         Game! With our Advance matchmaking algorithm get connected with the
         right opponent and enjoy playing Chess
       </p>
+
+      </div>
+      </div>
       <Table
         striped
         bordered
@@ -335,6 +365,7 @@ export default function QuickStart({ isServerInfo }) {
           </Card.Body>
         </Card>
       </div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#273036" fill-opacity="1" d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,250.7C1248,256,1344,288,1392,304L1440,320L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
     </div>
   );
 }
