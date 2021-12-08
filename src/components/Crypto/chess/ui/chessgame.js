@@ -465,20 +465,20 @@ const CryptoChessGameWrapper = (props) => {
     await getGameState(Number(boardNumber));
     let state = getCookie("checkState");
     console.log("checkState: " + state);
-     if (state == "2") {
+     if (state === "2") {
       setShowGameState(true);
       setShowWhiteDeposit(false);
-      setshowWhiteWithdraw(false);
-      setShowBlackDeposit(false);
+      setshowWhiteWithdraw(true);
+      setShowBlackDeposit(true);
       setShowClaimButtonForWhite(true);
       setShowClaimButtonForBlack(true);
     } else if (state === "3") {
-      setShowGameState(false);
-      setShowWhiteDeposit(false);
-      setshowWhiteWithdraw(false);
-      setShowBlackDeposit(true);
-      setShowClaimButtonForWhite(false);
-      setShowClaimButtonForBlack(false);
+      setShowGameState(true);
+      setShowWhiteDeposit(true);
+      setshowWhiteWithdraw(true);
+      setShowBlackDeposit(false);
+      setShowClaimButtonForWhite(true);
+      setShowClaimButtonForBlack(true);
     } else if (state === "4") {
       setShowGameState(true);
       setShowWhiteDeposit(true);
@@ -523,7 +523,7 @@ const CryptoChessGameWrapper = (props) => {
       </div>
     );
   };
-  setInterval(checkFunction, 10000, boardNumber);
+  setInterval(checkFunction, 60000, boardNumber);
   const toast = useToast();
   
   // sleep function
@@ -654,7 +654,7 @@ const CryptoChessGameWrapper = (props) => {
             Black Deposit
           </Button>}
           <br />
-          {!showWhiteDeposit && <Button
+          {!showWhiteWithdraw && <Button
             onClick={async () => {
               whiteWithdraw(Number(boardNumber));
               // setShowWhiteWithdraw(true);
@@ -686,7 +686,7 @@ const CryptoChessGameWrapper = (props) => {
           </Button>}
           <h4> Opponent: {opponentUserName} </h4>
           <div style={{ display: "flex" }}>
-            <LockScreen timeout={10000} ui={getLockScreenUi}>
+            <LockScreen timeout={60000} ui={getLockScreenUi}>
               <CryptoChessGame
                 playAudio={play}
                 gameId={gameid}
