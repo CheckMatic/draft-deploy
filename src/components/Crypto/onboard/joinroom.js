@@ -1,6 +1,7 @@
 import React from "react";
 import CryptoJoinGame from "./joingame";
 import CryptoChessGame from "../chess/ui/chessgame";
+const socket = require("../connection/socket").socket;
 
 /**
  * Onboard is where we create the game room.
@@ -70,6 +71,10 @@ class CryptoJoinRoom extends React.Component {
                 // the uuid we generate here.
                 this.setState({
                   didGetUserName: true,
+                });
+                socket.on("boardNumber", (data) => {
+                  // alert(data);
+                  console.log(data);
                 });
               }}
             >

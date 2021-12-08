@@ -22,6 +22,11 @@ const CryptoJoinGameRoom = (gameid, userName, isCreator) => {
     isCreator: isCreator,
   };
   socket.emit("playerJoinGame", idData);
+  // get the boardNumber from the server
+  socket.on("boardNumber", (data) => {
+    // alert(data);
+    console.log(data);
+  });
 };
 
 const CryptoJoinGame = (props) => {
@@ -33,9 +38,7 @@ const CryptoJoinGame = (props) => {
   CryptoJoinGameRoom(gameid, props.userName, props.isCreator);
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>
-        Welcome to Crypto Chess with Friend!
-      </h1>
+      <h1 style={{ textAlign: "center" }}>CheckMatic</h1>
     </div>
   );
 };

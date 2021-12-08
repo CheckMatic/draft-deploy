@@ -13,6 +13,7 @@ class CryptoCreateNewGame extends React.Component {
     didGetUserName: false,
     inputText: "",
     gameId: "",
+    boardNumber: "",
   };
 
   constructor(props) {
@@ -20,36 +21,45 @@ class CryptoCreateNewGame extends React.Component {
     this.textArea = React.createRef();
   }
 
-  send = () => {
-    /**
-     * This method should create a new room in the '/' namespace
-     * with a unique identifier.
-     */
-    const newGameRoomId = uuid();
+  getBoardNumber = () => {
+    var decoded_cookie = decodeURIComponent(document.cookie);
+    var ca = decoded_cookie.split(";");
 
-    // set the state of this component with the gameId so that we can
-    // redirect the user to that URL later.
+    var boardNumber = "";
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf("boardNumber") == 0) {
+        boardNumber = c.substring(12, c.length);
+      }
+    }
+    this.setState({
+      boardNumber: boardNumber,
+    });
+
+    socket.emit("boardNumber", boardNumber);
+
+    return boardNumber;
+  };
+
+  send = () => {
+    const newGameRoomId = uuid();
     this.setState({
       gameId: newGameRoomId,
     });
-
-    // emit an event to the server to create a new room
     socket.emit("createNewGame", newGameRoomId);
   };
 
   typingUserName = () => {
-    // grab the input text from the field from the DOM
     const typedText = this.textArea.current.value;
-
-    // set the state with that text
     this.setState({
       inputText: typedText,
     });
   };
 
   render() {
-    // !!! TODO: edit this later once you have bought your own domain.
-
     return (
       <React.Fragment>
         {this.state.didGetUserName ? (
@@ -98,9 +108,14 @@ class CryptoCreateNewGame extends React.Component {
                 // We should send a request to the server to create a new room with
                 // the uuid we generate here.
                 this.props.didRedirect();
+                this.getBoardNumber();
                 this.props.setUserName(this.state.inputText);
                 this.setState({
                   didGetUserName: true,
+                });
+                socket.on("boardNumber", (data) => {
+                  // alert(data);
+                  console.log(data);
                 });
                 this.send();
               }}

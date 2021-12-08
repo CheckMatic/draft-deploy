@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Game from "../model/chess";
 import Square from "../model/square";
 import { Stage, Layer } from "react-konva";
@@ -10,8 +10,19 @@ import piecemap from "./piecemap";
 import { useParams } from "react-router-dom";
 import { ColorContext } from "components/context/colorcontext";
 import VideoChatApp from "../../connection/videochat";
-const socket = require("../../connection/socket").socket;
+import { useSmartContract } from "hooks/useSmartContract";
+import { Button } from "react-bootstrap";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Dialog from "@material-ui/core/Dialog";
+import LockScreen from "react-lock-screen";
+import { useToast } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import Typical from "react-typical";
 
+const socket = require("../../connection/socket").socket;
 class CryptoChessGame extends React.Component {
   state = {
     gameState: new Game(this.props.color),
@@ -112,9 +123,14 @@ class CryptoChessGame extends React.Component {
     });
 
     if (blackCheckmated) {
-      alert("WHITE WON BY CHECKMATE!");
+      alert(
+        "WHITE WON BY CHECKMATE! Accept the transaction to claim rewards!!"
+      );
+      // Call the function to claim the reward
     } else if (whiteCheckmated) {
-      alert("BLACK WON BY CHECKMATE!");
+      alert(
+        "BLACK WON BY CHECKMATE! Accept the transaction to claim rewards!!"
+      );
     }
   };
 
@@ -256,6 +272,8 @@ const CryptoChessGameWrapper = (props) => {
    */
 
   // get the gameId from the URL here and pass it to the chessGame component as a prop.
+  var t;
+  var timer_is_on = 0;
   const domainName = "http://localhost:3000";
   const color = React.useContext(ColorContext);
   const { gameid } = useParams();
@@ -264,6 +282,90 @@ const CryptoChessGameWrapper = (props) => {
   const [opponentDidJoinTheGame, didJoinGame] = React.useState(false);
   const [opponentUserName, setUserName] = React.useState("");
   const [gameSessionDoesNotExist, doesntExist] = React.useState(false);
+  const [hidden, setHidden] = React.useState(false);
+  const {
+    getGameState,
+    initGameBlack,
+    whiteDeposit,
+    whiteWithdraw,
+    blackDeposit,
+    whiteWon,
+    blackWon,
+  } = useSmartContract();
+  const [boardNumber, setBoardNumber] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const [bet, setBet] = React.useState(0);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const getBoardNumber = () => {
+    var decoded_cookie = decodeURIComponent(document.cookie);
+    var ca = decoded_cookie.split(";");
+
+    var boardNumber = "";
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf("boardNumber") == 0) {
+        boardNumber = c.substring(12, c.length);
+      }
+    }
+
+    socket.emit("boardNumber", boardNumber);
+
+    return boardNumber;
+  };
+
+  const getBoardNumberForBlack = () => {
+    var decoded_cookie = decodeURIComponent(document.cookie);
+    var ca = decoded_cookie.split(";");
+
+    var boardNumber = "";
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf("black") == 0) {
+        boardNumber = c.substring(6, c.length);
+      }
+    }
+
+    console.log("boardNumber: " + boardNumber);
+
+    setBoardNumber(boardNumber);
+    return Number(boardNumber);
+  };
+
+  const getBet = () => {
+    var decoded_cookie = decodeURIComponent(document.cookie);
+    var ca = decoded_cookie.split(";");
+
+    var bet = "";
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf("bet") == 0) {
+        bet = c.substring(4, c.length);
+      }
+
+      console.log("bet: " + bet);
+    }
+
+    setBet(Number(bet));
+
+    return Number(bet);
+  };
 
   React.useEffect(() => {
     socket.on("playerJoinedRoom", (statusUpdate) => {
@@ -293,6 +395,11 @@ const CryptoChessGameWrapper = (props) => {
 
     socket.on("start game", (opponentUserName) => {
       console.log("START!");
+      socket.on("boardNumber", (data) => {
+        // alert(data);
+        // console.log(data);
+        document.cookie = "black=" + data;
+      });
       if (opponentUserName !== props.myUserName) {
         setUserName(opponentUserName);
         didJoinGame(true);
@@ -311,6 +418,7 @@ const CryptoChessGameWrapper = (props) => {
           userName: props.myUserName,
           gameId: gameid,
         });
+        socket.emit("boardNumber", getBoardNumber());
       }
     });
 
@@ -319,28 +427,235 @@ const CryptoChessGameWrapper = (props) => {
         setUserName(data.userName);
         console.log("data.socketId: data.socketId");
         setOpponentSocketId(data.socketId);
+        socket.on("boardNumber", (data) => {
+          // alert(data);
+          console.log("boardNumber: " + data);
+        });
         didJoinGame(true);
       }
     });
   }, []);
 
+  function stopCount() {
+    clearTimeout(t);
+    timer_is_on = 0;
+  }
+
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  async function checkFunction(boardNumber) {
+    await getGameState(Number(boardNumber));
+    let state = getCookie("checkState" + boardNumber);
+    console.log("checkState: " + state);
+    if (state === "4") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    console.log("board number ---------------", boardNumber);
+    checkFunction(boardNumber);
+  }, [boardNumber]);
+
+  const getLockScreenUi = (setLock) => {
+    return (
+      <div className="react-lock-screen__ui">
+        <img
+          width="32"
+          src="https://cdn3.iconfinder.com/data/icons/wpzoom-developer-icon-set/500/102-256.png"
+          alt="lock"
+        />
+        <p>Just to be safe, we locked the screen</p>
+        <button
+          onClick={async () => {
+            if (checkFunction(boardNumber) == true) {
+              setLock(false);
+            } else {
+              setInterval(checkFunction(boardNumber), 10000);
+            }
+          }}
+        >
+          unlock
+        </button>
+      </div>
+    );
+  };
+  setInterval(checkFunction, 10000, boardNumber);
+  const toast = useToast();
+
+  // sleep function
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   return (
     <React.Fragment>
       {opponentDidJoinTheGame ? (
         <div>
+          <Typical
+            steps={[
+              "Welcome to the game!",
+              1000,
+              "You are playing against '" + opponentUserName + "' !",
+              1000,
+            ]}
+            loop={1}
+            wrapper="h2"
+          />
+          <Button
+            onClick={async () => {
+              await getBoardNumberForBlack();
+              await getGameState(Number(boardNumber));
+              await getBet();
+              // sleep for a second
+              await sleep(1000);
+              toast({
+                position: "bottom-left",
+                render: () => (
+                  <div>
+                    <Box
+                      color="red"
+                      p={3}
+                      bg="blue.500"
+                      style={{ font: "caption" }}
+                    >
+                      Game Initiated!
+                    </Box>
+                    <Typical
+                      steps={["Hello", 1000, "Hello world!", 500]}
+                      loop={Infinity}
+                      wrapper="p"
+                    />
+                  </div>
+                ),
+                // 	position: 'bottom-left',
+                // 	title: "You're in the game!",
+                // 	description: "We've created successfully initialized the game for you.",
+                // 	status: 'success',
+                // 	duration: 9000,
+                // 	isClosable: true,
+                // 	size: 'xs',
+              });
+              await getBoardNumberForBlack();
+              await getGameState(Number(boardNumber));
+              await getBet();
+              await getBoardNumberForBlack();
+              await getGameState(Number(boardNumber));
+              await getBet();
+              await getBoardNumberForBlack();
+              await getGameState(Number(boardNumber));
+              await getBet();
+              handleClickOpen();
+            }}
+          >
+            The Challenge
+          </Button>
+          <div>
+            {/* <Button onClick={handleClickOpen}>Open My Custom Dialog</Button> */}
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Greetings from CheckMatic</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Do you accept the challenge of playing against{" "}
+                  {opponentUserName}?
+                  <br />
+                  <Typical
+                    steps={["Matic on Stake: " + bet, 1000]}
+                    loop={Infinity}
+                    wrapper="p"
+                  />
+                  <br />
+                  (If the matic on stake is 0, close this box and click "The
+                  Challenge" again)
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Close</Button>
+                <Button
+                  onClick={async () => {
+                    handleClose();
+                    initGameBlack(Number(boardNumber));
+                    if (!hidden) {
+                      setHidden(true);
+                    }
+                  }}
+                >
+                  Yes
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+          <br />
+          <Button
+            onClick={async () => {
+              whiteDeposit(Number(boardNumber), Number(bet));
+            }}
+          >
+            White Deposit
+          </Button>
+          <br />
+          <Button
+            onClick={async () => {
+              blackDeposit(Number(boardNumber), Number(bet));
+            }}
+          >
+            Black Deposit
+          </Button>
+          <br />
+          <Button
+            onClick={async () => {
+              whiteWithdraw(Number(boardNumber));
+            }}
+          >
+            White Withdraw
+          </Button>
+          <br />
+          <Button
+            onClick={async () => {
+              whiteWon(Number(boardNumber));
+            }}
+          >
+            Claim Button for white
+          </Button>
+          <br />
+          <Button
+            onClick={async () => {
+              blackWon(Number(boardNumber));
+            }}
+          >
+            Claim Button for black
+          </Button>
           <h4> Opponent: {opponentUserName} </h4>
           <div style={{ display: "flex" }}>
-            <CryptoChessGame
-              playAudio={play}
-              gameId={gameid}
-              color={color.didRedirect}
-            />
-            <VideoChatApp
-              mySocketId={socket.id}
-              opponentSocketId={opponentSocketId}
-              myUserName={props.myUserName}
-              opponentUserName={opponentUserName}
-            />
+            <LockScreen timeout={10000} ui={getLockScreenUi}>
+              <CryptoChessGame
+                playAudio={play}
+                gameId={gameid}
+                color={color.didRedirect}
+              />
+              <VideoChatApp
+                mySocketId={socket.id}
+                opponentSocketId={opponentSocketId}
+                myUserName={props.myUserName}
+                opponentUserName={opponentUserName}
+              />
+            </LockScreen>
           </div>
           <h4> You: {props.myUserName} </h4>
         </div>

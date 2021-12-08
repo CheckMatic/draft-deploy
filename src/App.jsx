@@ -41,6 +41,9 @@ import CryptoJoinGame from "components/Crypto/onboard/joingame";
 import CryptoChessGame from "components/Crypto/chess/ui/chessgame";
 import BettingAmount from "components/Crypto/smartContract/bettingAmount";
 
+// Minting NFTs
+import CreateNFT from "components/CreateNFT/CreateNFT";
+
 const { Header, Footer } = Layout;
 
 const styles = {
@@ -154,6 +157,9 @@ const App = ({ isServerInfo }) => {
               </Route>
               <Route exact path="/">
                 <Redirect to="/quickstart" />
+              </Route>
+              <Route exact path="/nft">
+                <CreateNFT />
               </Route>
               <Route path="/nonauthenticated">
                 <>Please login using the "Authenticate" button</>

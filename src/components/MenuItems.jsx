@@ -14,7 +14,7 @@ function MenuItems() {
         fontSize: "17px",
         fontWeight: "500",
         width: "100%",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
       defaultSelectedKeys={[pathname]}
     >
@@ -30,11 +30,13 @@ function MenuItems() {
       <Menu.Item key="/erc20balance">
         <NavLink to="/erc20balance">BALANCE</NavLink>
       </Menu.Item>
-      
+
       <Menu.Item key="/nftBalance">
         <NavLink to="/nftBalance">NFT</NavLink>
       </Menu.Item>
-      
+      <Menu.Item key="/nft">
+        <NavLink to="/nft">Mint Your NFT</NavLink>
+      </Menu.Item>
     </Menu>
   );
 }
