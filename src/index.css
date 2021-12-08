@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Readex+Pro&display=swap');
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'Readex Pro', sans-serif;
+
 }
 
 ul[class],
