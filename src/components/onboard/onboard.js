@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import uuid from 'uuid/v4'
 import { ColorContext } from '../context/colorcontext' 
+import background from 'img/varying-stripes.svg'
 const socket  = require('../connection/socket').socket
 
 /**
@@ -57,15 +58,17 @@ class CreateNewGame extends React.Component {
                 <Redirect to = {"/game/" + this.state.gameId}><button className="btn btn-success" style = {{marginLeft: String((window.innerWidth / 2) - 60) + "px", width: "120px"}}>Start Game</button></Redirect>
 
             :
-               <div>
-                    <h1 style={{textAlign: "center", marginTop: String((window.innerHeight / 3)) + "px"}}>Your Username:</h1>
+               <div style={{backgroundImage: `url(${background})`}}>
+                   
+                    <h1 style={{textAlign: "center", marginTop: String((window.innerHeight / 3)) + "px"}}>Enter Your Coolest Name!</h1>
 
-                    <input style={{marginLeft: String((window.innerWidth / 2) - 120) + "px", width: "240px", marginTop: "62px"}} 
+                    <input style={{border:"0",borderBottom:"2px solid lightgrey",padding:"10px",background:"#f7f7f7",marginLeft: String((window.innerWidth / 2) - 120) + "px", width: "240px", marginTop: "62px", borderColor:"#a7a7a7"}} 
                            ref = {this.textArea}
                            onInput = {this.typingUserName}></input>
                            
                     <button className="btn btn-primary" 
-                        style = {{marginLeft: String((window.innerWidth / 2) - 60) + "px", width: "120px", marginTop: "62px"}} 
+                        style = {{"border":"1px solid #e8e8e8","color":"black","padding":"0.7em 1.7em","fontSize":"18px","borderRadius":"0.2em","background":"#e8e8e8","transition":"all .3s","boxShadow":"6px 6px 12px #c5c5c5,\n             -6px -6px 12px #ffffff",marginBottom:"100px",marginLeft: String((window.innerWidth / 2) - 60) + "px", width: "120px", marginTop: "62px", 
+                        "button_active":{"boxShadow":"4px 4px 12px #c5c5c5,\n -4px -4px 12px #ffffff"}, }} 
                         disabled = {!(this.state.inputText.length > 0)} 
                         onClick = {() => {
                             // When the 'Submit' button gets pressed from the username screen,
@@ -77,7 +80,7 @@ class CreateNewGame extends React.Component {
                                 didGetUserName: true
                             })
                             this.send()
-                        }}>Submit</button>
+                        }}>Play Now</button>
                 </div>
             }
             </React.Fragment>)
