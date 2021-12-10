@@ -23,6 +23,7 @@ import QuickStart from "components/QuickStart";
 import Contract from "components/Contract/Contract";
 import Text from "antd/lib/typography/Text";
 import Ramper from "components/Ramper";
+import { NavLink } from "react-router-dom";
 import MenuItems from "./components/MenuItems";
 
 // Chess Game
@@ -101,7 +102,9 @@ const App = ({ isServerInfo }) => {
     <Layout style={{ height: "100vh", overflow: "auto" }}>
       <Router>
         <Header style={styles.header}>
-          <Logo />
+          <NavLink to="/quickstart">
+            <Logo />
+          </NavLink>
           <MenuItems />
           <div style={styles.headerRight}>
             <Chains />
