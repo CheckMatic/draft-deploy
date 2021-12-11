@@ -2,6 +2,8 @@ import React from "react";
 import CryptoJoinGame from "./joingame";
 import CryptoChessGame from "../chess/ui/chessgame";
 import background from 'img/varying-stripes.svg';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Accordion from "react-bootstrap/Accordion";
 
 const socket = require("../connection/socket").socket;
 
@@ -40,6 +42,19 @@ class CryptoJoinRoom extends React.Component {
           </React.Fragment>
         ) : (
           <div style={{backgroundImage: `url(${background})`}}>
+            <Accordion>
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header className="text-center">How does it work?</Accordion.Header>
+                    <Accordion.Body>
+                    <p style={{color: "black", fontWeight: "400", textAlign: "left"}}>
+                🔗 Enter Username<br></br>
+                🎮 Share the Link with Your Friend<br></br>
+                💲 Play the Game<br></br>
+                👑 No Crypto Staking in Normal Game
+              </p>
+                </Accordion.Body>
+                </Accordion.Item>
+                </Accordion>
             <h1
               style={{
                 textAlign: "center",
