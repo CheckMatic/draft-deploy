@@ -38,7 +38,7 @@ const CryptoJoinGame = (props) => {
   CryptoJoinGameRoom(gameid, props.userName, props.isCreator);
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>CheckMatic</h1>
+      <h1 style={{ textAlign: "center" }}></h1>
     </div>
   );
 };
