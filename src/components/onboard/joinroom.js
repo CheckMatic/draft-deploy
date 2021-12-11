@@ -2,8 +2,6 @@ import React from 'react'
 import JoinGame from './joingame'
 import ChessGame from '../chess/ui/chessgame'
 import background from 'img/varying-stripes.svg';
-import "bootstrap/dist/css/bootstrap.min.css";
-import Accordion from "react-bootstrap/Accordion";
 
 
 /**
@@ -42,19 +40,6 @@ class JoinRoom extends React.Component {
                 </React.Fragment>
             :
                <div style={{backgroundImage: `url(${background})`}}>
-                   <Accordion>
-                <Accordion.Item eventKey="0">
-                    <Accordion.Header className="text-center">How does it work?</Accordion.Header>
-                    <Accordion.Body>
-                    <p style={{color: "black", fontWeight: "400", textAlign: "left"}}>
-                🔗 Enter Username<br></br>
-                🎮 Share the Link with Your Friend<br></br>
-                💲 Play the Game<br></br>
-                👑 No Crypto Staking in Normal Game
-              </p>
-                </Accordion.Body>
-                </Accordion.Item>
-                </Accordion>
                     <h1 style={{textAlign: "center", marginTop: String((window.innerHeight / 3)) + "px"}}>Your Username:</h1>
 
                     <input style={{border:"0",borderBottom:"2px solid lightgrey",padding:"10px",background:"#f7f7f7",marginLeft: String((window.innerWidth / 2) - 120) + "px", width: "240px", marginTop: "62px", borderColor:"#a7a7a7"}}

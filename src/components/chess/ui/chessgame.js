@@ -10,9 +10,6 @@ import piecemap from "./piecemap";
 import { useParams } from "react-router-dom";
 import { ColorContext } from "../../context/colorcontext";
 import VideoChatApp from "../../connection/videochat";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Alert from "react-bootstrap/Alert";
-
 const socket = require("../../connection/socket").socket;
 
 class ChessGame extends React.Component {
@@ -330,10 +327,9 @@ const ChessGameWrapper = (props) => {
   return (
     <React.Fragment>
       {opponentDidJoinTheGame ? (
-        <div style={{"display":"grid","gridTemplateColumns":"1fr","gridTemplateRows":"repeat(4, 1fr)","gridColumnGap":"0px","gridRowGap":"11px"}}>
-        <div >
-          <br/><Alert variant="success"> <h4> Opponent Name: {opponentUserName} </h4> <h4>Your Name: {props.myUserName} </h4></Alert>
-          <div>
+        <div>
+          <h4> Opponent: {opponentUserName} </h4>
+          <div style={{ display: "flex" }}>
             <ChessGame
               playAudio={play}
               gameId={gameid}
@@ -345,10 +341,8 @@ const ChessGameWrapper = (props) => {
               myUserName={props.myUserName}
               opponentUserName={opponentUserName}
             />
-            
           </div>
-          
-        </div>
+          <h4> You: {props.myUserName} </h4>
         </div>
       ) : gameSessionDoesNotExist ? (
         <div>
@@ -386,11 +380,8 @@ const ChessGameWrapper = (props) => {
             Waiting for other opponent to join the game...{" "}
           </h1>
         </div>
-        
       )}
-      
     </React.Fragment>
-    
   );
 };
 
