@@ -3,6 +3,8 @@ import { Redirect } from "react-router-dom";
 import uuid from "uuid/v4";
 import { ColorContext } from "components/context/colorcontext";
 import background from 'img/varying-stripes.svg'
+import "bootstrap/dist/css/bootstrap.min.css";
+import Accordion from "react-bootstrap/Accordion";
 
 const socket = require("../connection/socket").socket;
 
@@ -78,6 +80,19 @@ class CryptoCreateNewGame extends React.Component {
           </Redirect>
         ) : (
           <div style={{backgroundImage: `url(${background})`}}>
+            <Accordion>
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header className="text-center">How does it work?</Accordion.Header>
+                    <Accordion.Body>
+                    <p style={{color: "black", fontWeight: "400", textAlign: "left"}}>
+                🔗 Enter Username<br></br>
+                🎮 Stake Your $MATIC<br></br>
+                💲 Play the Game<br></br>
+                👑 Winners Take it All
+              </p>
+                </Accordion.Body>
+                </Accordion.Item>
+                </Accordion>
             <h1
               style={{
                 textAlign: "center",
@@ -115,7 +130,7 @@ class CryptoCreateNewGame extends React.Component {
                 this.send();
               }}
             >
-              Submit
+              Play
             </button>
           </div>
         )}
