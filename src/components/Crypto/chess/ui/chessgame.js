@@ -23,6 +23,9 @@ import { Box } from "@chakra-ui/react";
 import Typical from "react-typical";
 import ToggleDisplay from 'react-toggle-display';
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import Alert from "react-bootstrap/Alert";
+
 
 const socket = require("../../connection/socket").socket;
 class CryptoChessGame extends React.Component {
@@ -558,7 +561,7 @@ const CryptoChessGameWrapper = (props) => {
             loop={1}
             wrapper="h2"
           />
-          {!showGameState && <Button
+          <Button style={{width:"100%", marginTop:"20px"}}
             onClick={async () => {
               await getBoardNumberForBlack();
               await getGameState(Number(boardNumber));
@@ -605,7 +608,7 @@ const CryptoChessGameWrapper = (props) => {
             }}
           >
             The Challenge
-          </Button>}
+          </Button>
           <div>
             {/* <Button onClick={handleClickOpen}>Open My Custom Dialog</Button> */}
             <Dialog open={open} onClose={handleClose}>
@@ -634,7 +637,6 @@ const CryptoChessGameWrapper = (props) => {
                     if (!hidden) {
                       setHidden(true);
                     }
-                    setShowGameState(false);
                   }}
                 >
                   Yes
@@ -643,61 +645,55 @@ const CryptoChessGameWrapper = (props) => {
             </Dialog>
           </div>
           <br />
-          {!showWhiteDeposit && <Button
+          <div style={{"display":"grid","gridTemplateColumns":"repeat(5, 1fr)","gridTemplateRows":"0.2fr","gridColumnGap":"10px","gridRowGap":"0px"}}>
+          <Button
             onClick={async () => {
               whiteDeposit(Number(boardNumber), Number(bet));
-              // setShowWhiteDeposit(true);
             }}
           >
             White Deposit
-          </Button>}
-          <br />
-          {!showBlackDeposit && <Button
+          </Button>
+          
+          <Button
             onClick={async () => {
               blackDeposit(Number(boardNumber), Number(bet));
-              // setShowBlackDeposit(true);
             }}
           >
             Black Deposit
-          </Button>}
-          <br />
-          {!showWhiteWithdraw && <Button
+          </Button>
+       
+          <Button
             onClick={async () => {
               whiteWithdraw(Number(boardNumber));
-              // setShowWhiteWithdraw(true);
             }}
           >
             White Withdraw
-          </Button>}
-          <br />
-          {!showClaimButtonForWhite && <Button
+          </Button>
+         
+          <Button
             onClick={async () => {
               whiteWon(Number(boardNumber));
-              // setShowClaimButtonForWhite(true);
             }}
           >
-            Claim Button for white
-          </Button>}
-          <br />
-          {!showClaimButtonForBlack && <Button
+            Claim for White
+          </Button>
+         
+          <Button
             onClick={async () => {
               blackWon(Number(boardNumber));
-              // if (showClaimButtonForWhite === true) {
-              //   setShowClaimButtonForBlack(true);
-              // } else {
-              //   setShowClaimButtonForBlack(false);
-              // }
             }}
           >
-            Claim Button for black
-          </Button>}
-          <h4> Opponent: {opponentUserName} </h4>
-          <div style={{ display: "flex" }}>
-            {/* <LockScreen  ui={getLockScreenUi}> */}
+            Claim for Black
+          </Button></div><Alert variant="success" style={{marginTop: "20px"}}>
+          <h4> Opponent Name: {opponentUserName} </h4>
+          <h4> Your Name: {props.myUserName} </h4></Alert>
+          <div style={{"display":"grid","gridTemplateColumns":"1fr","gridTemplateRows":"repeat(4, 1fr)","gridColumnGap":"10px","gridRowGap":"0px"}}>
+            <LockScreen timeout={10000} ui={getLockScreenUi}>
               <CryptoChessGame
                 playAudio={play}
                 gameId={gameid}
                 color={color.didRedirect}
+                
               />
               <VideoChatApp
                 mySocketId={socket.id}
@@ -705,9 +701,10 @@ const CryptoChessGameWrapper = (props) => {
                 myUserName={props.myUserName}
                 opponentUserName={opponentUserName}
               />
-            {/* </LockScreen> */}
+            </LockScreen>
+            
           </div>
-          <h4> You: {props.myUserName} </h4>
+          
         </div>
       ) : gameSessionDoesNotExist ? (
         <div>
