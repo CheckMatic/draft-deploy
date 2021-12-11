@@ -48,9 +48,9 @@ class CryptoJoinRoom extends React.Component {
                     <Accordion.Body>
                     <p style={{color: "black", fontWeight: "400", textAlign: "left"}}>
                 🔗 Enter Username<br></br>
-                🎮 Share the Link with Your Friend<br></br>
+                🎮 Stake Your $MATIC<br></br>
                 💲 Play the Game<br></br>
-                👑 No Crypto Staking in Normal Game
+                👑 Winners Take it All
               </p>
                 </Accordion.Body>
                 </Accordion.Item>
