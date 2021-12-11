@@ -1,41 +1,24 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
-import uuid from 'uuid/v4'
-import { ColorContext } from '../context/colorcontext' 
-import background from 'img/varying-stripes.svg'
-const socket  = require('../connection/socket').socket
+import JoinGame from './joingame'
+import ChessGame from '../chess/ui/chessgame'
+import background from 'img/varying-stripes.svg';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Accordion from "react-bootstrap/Accordion";
+
 
 /**
  * Onboard is where we create the game room.
  */
 
-class CreateNewGame extends React.Component {
+class JoinRoom extends React.Component {
     state = {
         didGetUserName: false,
-        inputText: "",
-        gameId: ""
+        inputText: ""
     }
 
     constructor(props) {
         super(props);
         this.textArea = React.createRef();
-    }
-    
-    send = () => {
-        /**
-         * This method should create a new room in the '/' namespace
-         * with a unique identifier. 
-         */
-        const newGameRoomId = uuid()
-
-        // set the state of this component with the gameId so that we can
-        // redirect the user to that URL later. 
-        this.setState({
-            gameId: newGameRoomId
-        })
-
-        // emit an event to the server to create a new room 
-        socket.emit('createNewGame', newGameRoomId)
     }
 
     typingUserName = () => {
@@ -49,20 +32,32 @@ class CreateNewGame extends React.Component {
     }
 
     render() {
-        // !!! TODO: edit this later once you have bought your own domain. 
-
+    
         return (<React.Fragment>
             {
                 this.state.didGetUserName ? 
-
-                <Redirect to = {"/game/" + this.state.gameId}><button className="btn btn-success" style = {{marginLeft: String((window.innerWidth / 2) - 60) + "px", width: "120px"}}>Start Game</button></Redirect>
-
+                <React.Fragment>
+                    <JoinGame userName = {this.state.inputText} isCreator = {false}/>
+                    <ChessGame myUserName = {this.state.inputText}/>
+                </React.Fragment>
             :
                <div style={{backgroundImage: `url(${background})`}}>
-                   
-                    <h1 style={{textAlign: "center", marginTop: String((window.innerHeight / 3)) + "px"}}>Enter Your Coolest Name!</h1>
+                   <Accordion>
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header className="text-center">How does it work?</Accordion.Header>
+                    <Accordion.Body>
+                    <p style={{color: "black", fontWeight: "400", textAlign: "left"}}>
+                🔗 Enter Username<br></br>
+                🎮 Share the Link with Your Friend<br></br>
+                💲 Play the Game<br></br>
+                👑 No Crypto Staking in Normal Game
+              </p>
+                </Accordion.Body>
+                </Accordion.Item>
+                </Accordion>
+                    <h1 style={{textAlign: "center", marginTop: String((window.innerHeight / 3)) + "px"}}>Your Username:</h1>
 
-                    <input style={{border:"0",borderBottom:"2px solid lightgrey",padding:"10px",background:"#f7f7f7",marginLeft: String((window.innerWidth / 2) - 120) + "px", width: "240px", marginTop: "62px", borderColor:"#a7a7a7"}} 
+                    <input style={{border:"0",borderBottom:"2px solid lightgrey",padding:"10px",background:"#f7f7f7",marginLeft: String((window.innerWidth / 2) - 120) + "px", width: "240px", marginTop: "62px", borderColor:"#a7a7a7"}}
                            ref = {this.textArea}
                            onInput = {this.typingUserName}></input>
                            
@@ -74,24 +69,14 @@ class CreateNewGame extends React.Component {
                             // When the 'Submit' button gets pressed from the username screen,
                             // We should send a request to the server to create a new room with
                             // the uuid we generate here.
-                            this.props.didRedirect() 
-                            this.props.setUserName(this.state.inputText) 
                             this.setState({
                                 didGetUserName: true
                             })
-                            this.send()
-                        }}>Play Now</button>
+                        }}>Play</button>
                 </div>
             }
             </React.Fragment>)
     }
 }
 
-const Onboard = (props) => {
-    const color = React.useContext(ColorContext)
-
-    return <CreateNewGame didRedirect = {color.playerDidRedirect} setUserName = {props.setUserName}/>
-}
-
-
-export default Onboard
+export default JoinRoom
