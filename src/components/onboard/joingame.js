@@ -33,7 +33,7 @@ const JoinGame = (props) => {
   JoinGameRoom(gameid, props.userName, props.isCreator);
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>Welcome to Chess with Friend!</h1>
+      <h1 style={{ textAlign: "center" }}></h1>
     </div>
   );
 };
