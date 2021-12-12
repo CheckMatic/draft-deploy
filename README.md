@@ -6,6 +6,8 @@ Crypto + Chess + SmartContracts = CheckMatic !!
 
 A dApp which allows users to challenge their opponents and get Crypto prizes for winning the chess match. 
 
+[Video Presentation](https://youtu.be/geSFERRuEAg)
+
 ## Walkthrough 
 
 - Users login via their MetaMask 
