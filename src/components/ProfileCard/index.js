@@ -14,20 +14,7 @@ function Profile() {
                     LinkedIn="https://www.linkedin.com/in/avishmehta/"
                     GitHub="https://github.com/avishmehta68710"
                 />
-                <ProfileCard
-                    Picture="https://avatars.githubusercontent.com/u/71444879?v=4"
-                    Name="Parth Garg"
-                    About="Frontend Developer"
-                    LinkedIn="https://www.linkedin.com/in/bhautik-poriya-525601150/"
-                    GitHub="https://github.com/BhautikPoriya"
-                />
-                <ProfileCard
-                    Picture="https://avatars.githubusercontent.com/u/71517788?v=4"
-                    Name="Harsh Ghodkar"
-                    About="Blockchain Developer"
-                    LinkedIn="https://www.linkedin.com/in/harsh-ghodkar/"
-                    GitHub="https://github.com/Saviour1001"
-                />
+                
             </div>
         </div>
     );
