@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, createRef } from "react";
 import Game from "../model/chess";
 import Square from "../model/square";
@@ -22,9 +21,8 @@ import LockScreen from "react-lock-screen";
 import { useToast } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 import Typical from "react-typical";
-import ToggleDisplay from 'react-toggle-display';
+import ToggleDisplay from "react-toggle-display";
 import { useScreenshot } from "use-react-screenshot";
-
 
 const socket = require("../../connection/socket").socket;
 class CryptoChessGame extends React.Component {
@@ -280,7 +278,7 @@ const CryptoChessGameWrapper = (props) => {
   // get the gameId from the URL here and pass it to the chessGame component as a prop.
   var t;
   var timer_is_on = 0;
-  const domainName = "http://localhost:3000";
+  const domainName = "https://checkmatic.github.io/draft-deploy";
   const color = React.useContext(ColorContext);
   const { gameid } = useParams();
   const [play] = useSound(chessMove);
@@ -373,17 +371,15 @@ const CryptoChessGameWrapper = (props) => {
     return Number(bet);
   };
 
-
-
   React.useEffect(() => {
     socket.on("playerJoinedRoom", (statusUpdate) => {
       console.log(
         "A new player has joined the room! Username: " +
-        statusUpdate.userName +
-        ", Game id: " +
-        statusUpdate.gameId +
-        " Socket id: " +
-        statusUpdate.mySocketId
+          statusUpdate.userName +
+          ", Game id: " +
+          statusUpdate.gameId +
+          " Socket id: " +
+          statusUpdate.mySocketId
       );
       if (socket.id !== statusUpdate.mySocketId) {
         setOpponentSocketId(statusUpdate.mySocketId);
@@ -467,12 +463,10 @@ const CryptoChessGameWrapper = (props) => {
 
   const Takescreenshot = () => {
     console.log("takescreenshot");
-    const ref = createRef(null)
-    const [image, takeScreenshot] = useScreenshot()
-    const getImage = () => takeScreenshot(ref.current)
-
-
-  }
+    const ref = createRef(null);
+    const [image, takeScreenshot] = useScreenshot();
+    const getImage = () => takeScreenshot(ref.current);
+  };
 
   async function checkFunction(boardNumber) {
     await getGameState(Number(boardNumber));
@@ -604,8 +598,10 @@ const CryptoChessGameWrapper = (props) => {
   const [showWhiteDeposit, setShowWhiteDeposit] = React.useState(true);
   const [showBlackDeposit, setShowBlackDeposit] = React.useState(true);
   const [showWhiteWithdraw, setshowWhiteWithdraw] = React.useState(true);
-  const [showClaimButtonForWhite, setShowClaimButtonForWhite] = React.useState(true);
-  const [showClaimButtonForBlack, setShowClaimButtonForBlack] = React.useState(true);
+  const [showClaimButtonForWhite, setShowClaimButtonForWhite] =
+    React.useState(true);
+  const [showClaimButtonForBlack, setShowClaimButtonForBlack] =
+    React.useState(true);
 
   return (
     <React.Fragment>
@@ -621,18 +617,19 @@ const CryptoChessGameWrapper = (props) => {
             loop={1}
             wrapper="h2"
           />
-          {!showGameState && <Button
-            onClick={async () => {
-              await getBoardNumberForBlack();
-              await getGameState(Number(boardNumber));
-              await getBet();
-              // sleep for a second
-              await sleep(1000);
-              toast({
-                position: "bottom-left",
-                render: () => (
-                  <div>
-                    {/* <Box
+          {!showGameState && (
+            <Button
+              onClick={async () => {
+                await getBoardNumberForBlack();
+                await getGameState(Number(boardNumber));
+                await getBet();
+                // sleep for a second
+                await sleep(1000);
+                toast({
+                  position: "bottom-left",
+                  render: () => (
+                    <div>
+                      {/* <Box
                       color="red"
                       p={3}
                       bg="blue.500"
@@ -640,35 +637,36 @@ const CryptoChessGameWrapper = (props) => {
                     >
                       Game Initiated!
                     </Box> */}
-                    <Typical
-                      steps={["Game", 1000, "Initiated", 1000]}
-                      loop={Infinity}
-                      wrapper="p"
-                    />
-                  </div>
-                ),
-                // 	position: 'bottom-left',
-                // 	title: "You're in the game!",
-                // 	description: "We've created successfully initialized the game for you.",
-                // 	status: 'success',
-                // 	duration: 9000,
-                // 	isClosable: true,
-                // 	size: 'xs',
-              });
-              await getBoardNumberForBlack();
-              await getGameState(Number(boardNumber));
-              await getBet();
-              await getBoardNumberForBlack();
-              await getGameState(Number(boardNumber));
-              await getBet();
-              await getBoardNumberForBlack();
-              await getGameState(Number(boardNumber));
-              await getBet();
-              handleClickOpen();
-            }}
-          >
-            The Challenge
-          </Button>}
+                      <Typical
+                        steps={["Game", 1000, "Initiated", 1000]}
+                        loop={Infinity}
+                        wrapper="p"
+                      />
+                    </div>
+                  ),
+                  // 	position: 'bottom-left',
+                  // 	title: "You're in the game!",
+                  // 	description: "We've created successfully initialized the game for you.",
+                  // 	status: 'success',
+                  // 	duration: 9000,
+                  // 	isClosable: true,
+                  // 	size: 'xs',
+                });
+                await getBoardNumberForBlack();
+                await getGameState(Number(boardNumber));
+                await getBet();
+                await getBoardNumberForBlack();
+                await getGameState(Number(boardNumber));
+                await getBet();
+                await getBoardNumberForBlack();
+                await getGameState(Number(boardNumber));
+                await getBet();
+                handleClickOpen();
+              }}
+            >
+              The Challenge
+            </Button>
+          )}
           <div>
             {/* <Button onClick={handleClickOpen}>Open My Custom Dialog</Button> */}
             <Dialog open={open} onClose={handleClose}>
@@ -706,71 +704,85 @@ const CryptoChessGameWrapper = (props) => {
             </Dialog>
           </div>
           <br />
-          {!showWhiteDeposit && <Button
+          {!showWhiteDeposit && (
+            <Button
+              onClick={async () => {
+                try {
+                  whiteDeposit(Number(boardNumber), Number(bet));
+                  <Typical
+                    steps={["Deposited", 1000, "Matic on Stake: " + bet, 1000]}
+                    loop={Infinity}
+                    wrapper="p"
+                  />;
+                } catch (e) {
+                  <Typical
+                    steps={["You have already deposited", 1000]}
+                    loop={Infinity}
+                    wrapper="p"
+                  />;
+                }
+              }}
+            >
+              White Deposit
+            </Button>
+          )}
+          <br />
+          {!showBlackDeposit && (
+            <Button
+              onClick={async () => {
+                blackDeposit(Number(boardNumber), Number(bet));
+                // setShowBlackDeposit(true);
+              }}
+            >
+              Black Deposit
+            </Button>
+          )}
+          <br />
+          {!showWhiteWithdraw && (
+            <Button
+              onClick={async () => {
+                whiteWithdraw(Number(boardNumber));
+                // setShowWhiteWithdraw(true);
+              }}
+            >
+              White Withdraw
+            </Button>
+          )}
+          <br />
+          {!showClaimButtonForWhite && (
+            <Button
+              onClick={async () => {
+                whiteWon(Number(boardNumber));
+                // setShowClaimButtonForWhite(true);
+              }}
+            >
+              Claim Button for white
+            </Button>
+          )}
+          <br />
+          {!showClaimButtonForBlack && (
+            <Button
+              onClick={async () => {
+                blackWon(Number(boardNumber));
+                // if (showClaimButtonForWhite === true) {
+                //   setShowClaimButtonForBlack(true);
+                // } else {
+                //   setShowClaimButtonForBlack(false);
+                // }
+              }}
+            >
+              Claim Button for black
+            </Button>
+          )}
+          <Button
             onClick={async () => {
-              try {
-                whiteDeposit(Number(boardNumber), Number(bet));
-                <Typical
-                  steps={["Deposited", 1000, "Matic on Stake: " + bet, 1000]}
-                  loop={Infinity}
-                  wrapper="p"
-                />
-              } catch (e) {
-                <Typical
-                  steps={["You have already deposited", 1000]}
-                  loop={Infinity}
-                  wrapper="p"
-                />
+              {
+                Takescreenshot();
               }
             }}
           >
-            White Deposit
-          </Button>}
-          <br />
-          {!showBlackDeposit && <Button
-            onClick={async () => {
-              blackDeposit(Number(boardNumber), Number(bet));
-              // setShowBlackDeposit(true);
-            }}
-          >
-            Black Deposit
-          </Button>}
-          <br />
-          {!showWhiteWithdraw && <Button
-            onClick={async () => {
-              whiteWithdraw(Number(boardNumber));
-              // setShowWhiteWithdraw(true);
-            }}
-          >
-            White Withdraw
-          </Button>}
-          <br />
-          {!showClaimButtonForWhite && <Button
-            onClick={async () => {
-              whiteWon(Number(boardNumber));
-              // setShowClaimButtonForWhite(true);
-            }}
-          >
-            Claim Button for white
-          </Button>}
-          <br />
-          {!showClaimButtonForBlack && <Button
-            onClick={async () => {
-              blackWon(Number(boardNumber));
-              // if (showClaimButtonForWhite === true) {
-              //   setShowClaimButtonForBlack(true);
-              // } else {
-              //   setShowClaimButtonForBlack(false);
-              // }
-            }}
-          >
-            Claim Button for black
-          </Button>}
-          <Button
-            onClick={async () => {
-              { Takescreenshot() };
-            }}
-          >Take ss</Button>
+            Take ss
+          </Button>
           <h4> Opponent: {opponentUserName} </h4>
           <div style={{ display: "flex" }}>
             {/* <LockScreen  ui={getLockScreenUi}> */}
@@ -831,5 +843,3 @@ const CryptoChessGameWrapper = (props) => {
 };
 
 export default CryptoChessGameWrapper;
-
-

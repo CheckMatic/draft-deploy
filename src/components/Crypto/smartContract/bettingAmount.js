@@ -19,18 +19,29 @@ function BettingAmount() {
 
   return (
     <div>
-      <h1 style={{paddingBottom:"50px"}}>Enter $MATIC You Want to Stake/Bet</h1>
+      <h1 style={{ paddingBottom: "50px" }}>
+        Enter $MATIC You Want to Stake/Bet
+      </h1>
       <input
         type="number"
         value={bet}
         onChange={(e) => setBet(e.target.value)}
-        style={{marginLeft:"33%",marginRight:"10px", backgroundColor: "white", fontSize:"18px", borderRadius:"5px", padding:"10px"}}
+        style={{
+          marginLeft: "33%",
+          marginRight: "10px",
+          backgroundColor: "white",
+          fontSize: "18px",
+          borderRadius: "5px",
+          padding: "10px",
+        }}
       />
-      <button style={{borderRadius:"5px", padding:"10px", fontSize:"18px"}}
+      <button
+        style={{ borderRadius: "5px", padding: "10px", fontSize: "18px" }}
         onClick={() => {
           if (bet > 0 && bet < balance.formatted) {
             initGameWhite(bet).then((res) => {
-              window.location.href = "http://localhost:3000/#/cryptochess";
+              window.location.href =
+                "https://checkmatic.github.io/draft-deploy/#/cryptochess";
             });
           } else {
             alert("Please enter a valid amount");
@@ -39,8 +50,16 @@ function BettingAmount() {
       >
         Continue
       </button>
-      <img src={jumpchess} style={{paddingLeft:"40%", marginTop: "80px", marginBottom:"10px", height:"240px", width:"auto"}} />
-
+      <img
+        src={jumpchess}
+        style={{
+          paddingLeft: "40%",
+          marginTop: "80px",
+          marginBottom: "10px",
+          height: "240px",
+          width: "auto",
+        }}
+      />
     </div>
   );
 }

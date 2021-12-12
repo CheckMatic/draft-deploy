@@ -259,7 +259,7 @@ const ChessGameWrapper = (props) => {
    */
 
   // get the gameId from the URL here and pass it to the chessGame component as a prop.
-  const domainName = "http://localhost:3000";
+  const domainName = "https://checkmatic.github.io/draft-deploy";
   const color = React.useContext(ColorContext);
   const { gameid } = useParams();
   const [play] = useSound(chessMove);
@@ -330,25 +330,36 @@ const ChessGameWrapper = (props) => {
   return (
     <React.Fragment>
       {opponentDidJoinTheGame ? (
-        <div style={{"display":"grid","gridTemplateColumns":"1fr","gridTemplateRows":"repeat(4, 1fr)","gridColumnGap":"0px","gridRowGap":"11px"}}>
-        <div >
-          <br/><Alert variant="success"> <h4> Opponent Name: {opponentUserName} </h4> <h4>Your Name: {props.myUserName} </h4></Alert>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gridTemplateRows: "repeat(4, 1fr)",
+            gridColumnGap: "0px",
+            gridRowGap: "11px",
+          }}
+        >
           <div>
-            <ChessGame
-              playAudio={play}
-              gameId={gameid}
-              color={color.didRedirect}
-            />
-            <VideoChatApp
-              mySocketId={socket.id}
-              opponentSocketId={opponentSocketId}
-              myUserName={props.myUserName}
-              opponentUserName={opponentUserName}
-            />
-            
+            <br />
+            <Alert variant="success">
+              {" "}
+              <h4> Opponent Name: {opponentUserName} </h4>{" "}
+              <h4>Your Name: {props.myUserName} </h4>
+            </Alert>
+            <div>
+              <ChessGame
+                playAudio={play}
+                gameId={gameid}
+                color={color.didRedirect}
+              />
+              <VideoChatApp
+                mySocketId={socket.id}
+                opponentSocketId={opponentSocketId}
+                myUserName={props.myUserName}
+                opponentUserName={opponentUserName}
+              />
+            </div>
           </div>
-          
-        </div>
         </div>
       ) : gameSessionDoesNotExist ? (
         <div>
@@ -386,11 +397,8 @@ const ChessGameWrapper = (props) => {
             Waiting for other opponent to join the game...{" "}
           </h1>
         </div>
-        
       )}
-      
     </React.Fragment>
-    
   );
 };
 
