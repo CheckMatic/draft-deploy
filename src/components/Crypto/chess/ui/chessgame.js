@@ -461,13 +461,6 @@ const CryptoChessGameWrapper = (props) => {
     return "";
   }
 
-  const Takescreenshot = () => {
-    console.log("takescreenshot");
-    const ref = createRef(null);
-    const [image, takeScreenshot] = useScreenshot();
-    const getImage = () => takeScreenshot(ref.current);
-  };
-
   async function checkFunction(boardNumber) {
     await getGameState(Number(boardNumber));
     let state = getCookie("checkState");
@@ -497,6 +490,11 @@ const CryptoChessGameWrapper = (props) => {
       setShowClaimButtonForWhite(true);
       notify(state);
       clearInterval(intervalDuration);
+      <Typical
+        steps={["The game is now ready to play", 1000]}
+        loop={1}
+        wrapper="p"
+      />;
     }
     if (winner === "black") {
       setShowClaimButtonForBlack(false);
@@ -774,15 +772,7 @@ const CryptoChessGameWrapper = (props) => {
               Claim Button for black
             </Button>
           )}
-          <Button
-            onClick={async () => {
-              {
-                Takescreenshot();
-              }
-            }}
-          >
-            Take ss
-          </Button>
+
           <h4> Opponent: {opponentUserName} </h4>
           <div style={{ display: "flex" }}>
             {/* <LockScreen  ui={getLockScreenUi}> */}
