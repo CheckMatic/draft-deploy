@@ -490,17 +490,9 @@ const CryptoChessGameWrapper = (props) => {
       setShowClaimButtonForWhite(true);
       notify(state);
       clearInterval(intervalDuration);
-      Alert.alert(
-        "The Game is now ready to play",
-        "",
-        [
-          {
-            text: "OK",
-            onPress: () => {}
-          },
-        ],
-        { cancelable: false }
-      );
+      alert(
+        "The game is  now ready to play!"
+      )
 
     if (winner === "black") {
       setShowClaimButtonForBlack(false);
