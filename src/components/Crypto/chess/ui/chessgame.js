@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { ColorContext } from "components/context/colorcontext";
 import VideoChatApp from "../../connection/videochat";
 import { useSmartContract } from "hooks/useSmartContract";
-import { Alert, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -490,10 +490,12 @@ const CryptoChessGameWrapper = (props) => {
       setShowClaimButtonForWhite(true);
       notify(state);
       clearInterval(intervalDuration);
-      alert(
-        "The game is  now ready to play!"
-      )
-
+      <Typical
+        steps={["The game is now ready to play", 1000]}
+        loop={1}
+        wrapper="p"
+      />;
+    }
     if (winner === "black") {
       setShowClaimButtonForBlack(false);
     } else if (winner === "white") {
