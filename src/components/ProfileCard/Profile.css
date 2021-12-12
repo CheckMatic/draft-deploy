@@ -1,0 +1,12 @@
+.profiles {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+    padding: 40px 10px 50px 0px;
+    margin-left: 50%;
+    justify-content: space-evenly;
+}
+
+.text {
+    font-size: 30px;
+}

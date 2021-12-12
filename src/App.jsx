@@ -25,6 +25,7 @@ import Text from "antd/lib/typography/Text";
 import Ramper from "components/Ramper";
 import { NavLink } from "react-router-dom";
 import MenuItems from "./components/MenuItems";
+import ProfileCards from "./components/ProfileCard/index";
 
 // Chess Game
 import React from "react";
@@ -142,6 +143,9 @@ const App = ({ isServerInfo }) => {
                     <InchDex chain="polygon" />
                   </Tabs.TabPane>
                 </Tabs>
+              </Route>
+              <Route path="/about">
+                <ProfileCards />
               </Route>
               <Route path="/erc20balance">
                 <ERC20Balance />

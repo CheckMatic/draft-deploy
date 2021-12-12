@@ -17,7 +17,7 @@ import chessboard2 from "img/2.gif";
 import chessboard3 from "img/3.gif";
 import chessboard4 from "img/4.gif";
 import dboard from "img/3dboard.gif";
-
+import ProfileCard from "./ProfileCard/index";
 import InchDex from "components/InchDex";
 import {
   BrowserRouter as Router,
@@ -335,7 +335,9 @@ export default function QuickStart({ isServerInfo }) {
             <Card.Text>
               Learn about our Purpose and Vision behind building CheckMatic
             </Card.Text>
-            <Button variant="primary">Learn More</Button>
+            <NavLink to="/about">
+            <Button variant="primary" onClick={<ProfileCard/>}>Learn More</Button>
+            </NavLink>
           </Card.Body>
         </Card>
 
