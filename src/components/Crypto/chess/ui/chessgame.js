@@ -308,7 +308,7 @@ const CryptoChessGameWrapper = (props) => {
     setOpen(false);
   };
 
-  const getBoardNumber = () => {
+  const getBoardNumber = async () => {
     var decoded_cookie = decodeURIComponent(document.cookie);
     var ca = decoded_cookie.split(";");
 
@@ -324,7 +324,8 @@ const CryptoChessGameWrapper = (props) => {
     }
 
     socket.emit("boardNumber", boardNumber);
-
+    console.log("boardNumber=>" + boardNumber);
+    setBoardNumber(boardNumber);
     return boardNumber;
   };
 
@@ -402,7 +403,7 @@ const CryptoChessGameWrapper = (props) => {
       socket.on("boardNumber", (data) => {
         // alert(data);
         // console.log(data);
-        document.cookie = "black=" + data;
+        // document.cookie = "black=" + data;
       });
       if (opponentUserName !== props.myUserName) {
         setUserName(opponentUserName);
@@ -462,7 +463,9 @@ const CryptoChessGameWrapper = (props) => {
   }
 
   async function checkFunction(boardNumber) {
+    getBoardNumber();
     await getGameState(Number(boardNumber));
+
     let state = getCookie("checkState");
     let winner = getCookie("winner");
     console.log("checkState: " + state);
@@ -477,7 +480,7 @@ const CryptoChessGameWrapper = (props) => {
     } else if (state === "3") {
       setShowGameState(true);
       setShowWhiteDeposit(true);
-      setshowWhiteWithdraw(true);
+      setshowWhiteWithdraw(false);
       setShowBlackDeposit(false);
       setShowClaimButtonForWhite(true);
       setShowClaimButtonForBlack(true);
@@ -618,11 +621,9 @@ const CryptoChessGameWrapper = (props) => {
           {!showGameState && (
             <Button
               onClick={async () => {
-                await getBoardNumberForBlack();
+                console.log("boardNumber: " + boardNumber);
                 await getGameState(Number(boardNumber));
                 await getBet();
-                // sleep for a second
-                await sleep(1000);
                 toast({
                   position: "bottom-left",
                   render: () => (
@@ -642,23 +643,8 @@ const CryptoChessGameWrapper = (props) => {
                       />
                     </div>
                   ),
-                  // 	position: 'bottom-left',
-                  // 	title: "You're in the game!",
-                  // 	description: "We've created successfully initialized the game for you.",
-                  // 	status: 'success',
-                  // 	duration: 9000,
-                  // 	isClosable: true,
-                  // 	size: 'xs',
                 });
-                await getBoardNumberForBlack();
-                await getGameState(Number(boardNumber));
-                await getBet();
-                await getBoardNumberForBlack();
-                await getGameState(Number(boardNumber));
-                await getBet();
-                await getBoardNumberForBlack();
-                await getGameState(Number(boardNumber));
-                await getBet();
+
                 handleClickOpen();
               }}
             >
@@ -706,7 +692,7 @@ const CryptoChessGameWrapper = (props) => {
             <Button
               onClick={async () => {
                 try {
-                  whiteDeposit(Number(boardNumber), Number(bet));
+                  whiteDeposit(Number(boardNumber), Number(getCookie("bet")));
                   <Typical
                     steps={["Deposited", 1000, "Matic on Stake: " + bet, 1000]}
                     loop={Infinity}
