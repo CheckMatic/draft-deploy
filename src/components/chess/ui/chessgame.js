@@ -12,8 +12,11 @@ import { ColorContext } from "../../context/colorcontext";
 import VideoChatApp from "../../connection/videochat";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Alert from "react-bootstrap/Alert";
+import { Button } from "react-bootstrap";
 
 const socket = require("../../connection/socket").socket;
+
+const moves = [];
 
 class ChessGame extends React.Component {
   state = {
@@ -89,6 +92,8 @@ class ChessGame extends React.Component {
     } else if (update === "invalid move") {
       this.revertToPreviousState(selectedId);
       return;
+    } else {
+      moves.push(update.san);
     }
 
     // let the server and the other client know your move
@@ -346,6 +351,14 @@ const ChessGameWrapper = (props) => {
               <h4> Opponent Name: {opponentUserName} </h4>{" "}
               <h4>Your Name: {props.myUserName} </h4>
             </Alert>
+            <Button
+              variant="primary"
+              onClick={() => {
+                console.log(moves);
+              }}
+            >
+              Store Moves
+            </Button>
             <div>
               <ChessGame
                 playAudio={play}
