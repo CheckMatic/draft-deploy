@@ -25,6 +25,8 @@ import ToggleDisplay from "react-toggle-display";
 import { useScreenshot } from "use-react-screenshot";
 
 const socket = require("../../connection/socket").socket;
+const moves = [];
+
 class CryptoChessGame extends React.Component {
   state = {
     gameState: new Game(this.props.color),
@@ -79,18 +81,21 @@ class CryptoChessGame extends React.Component {
     } else if (update === "user tried to capture their own piece") {
       this.revertToPreviousState(selectedId);
       return;
-    } else if (update === "b is in check" || update === "w is in check") {
+    } else if (update[0] === "b is in check" || update[0] === "w is in check") {
+      console.log(update);
       // change the fill of the enemy king or your king based on which side is in check.
       // play a sound or something
-      if (update[0] === "b") {
+      moves.push(update[1].san);
+      if (update[0][0] === "b") {
         blackKingInCheck = true;
       } else {
         whiteKingInCheck = true;
       }
     } else if (
-      update === "b has been checkmated" ||
-      update === "w has been checkmated"
+      update[0] === "b has been checkmated" ||
+      update[0] === "w has been checkmated"
     ) {
+      moves.push(update[1].san);
       if (update[0] === "b") {
         blackCheckmated = true;
       } else {
@@ -99,6 +104,8 @@ class CryptoChessGame extends React.Component {
     } else if (update === "invalid move") {
       this.revertToPreviousState(selectedId);
       return;
+    } else {
+      moves.push(update.san);
     }
 
     // let the server and the other client know your move
@@ -299,6 +306,13 @@ const CryptoChessGameWrapper = (props) => {
   const [boardNumber, setBoardNumber] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [bet, setBet] = React.useState(0);
+  const [boardMoves, setBoardMoves] = React.useState([]);
+
+  async function updateMoves() {
+    setBoardMoves(moves);
+  }
+
+  var movesUpdate = setInterval(updateMoves, 500);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -767,6 +781,13 @@ const CryptoChessGameWrapper = (props) => {
               gameId={gameid}
               color={color.didRedirect}
             />
+            Ordered List of moves of both players: Keep on updating this list as
+            the game progresses.
+            <ol>
+              {boardMoves.map((move) => {
+                return <li>{move}</li>;
+              })}
+            </ol>
             <VideoChatApp
               mySocketId={socket.id}
               opponentSocketId={opponentSocketId}
