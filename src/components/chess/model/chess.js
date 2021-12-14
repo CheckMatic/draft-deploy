@@ -242,13 +242,14 @@ class Game {
       : " has not been checkmated";
     console.log(this.chess.turn() + checkMate);
     if (checkMate === " has been checkmated") {
-      return this.chess.turn() + checkMate;
+      return [this.chess.turn() + checkMate, moveAttempt];
     }
     // changes the fill color of the opponent's king that is in check
     const check = this.chess.in_check() ? " is in check" : " is not in check";
     console.log(this.chess.turn() + check);
     if (check === " is in check") {
-      return this.chess.turn() + check;
+      // Return an array of status and move
+      return [this.chess.turn() + check, moveAttempt];
     }
 
     console.log(currentBoard);

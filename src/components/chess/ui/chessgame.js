@@ -72,18 +72,21 @@ class ChessGame extends React.Component {
     } else if (update === "user tried to capture their own piece") {
       this.revertToPreviousState(selectedId);
       return;
-    } else if (update === "b is in check" || update === "w is in check") {
+    } else if (update[0] === "b is in check" || update[0] === "w is in check") {
+      console.log(update);
       // change the fill of the enemy king or your king based on which side is in check.
       // play a sound or something
-      if (update[0] === "b") {
+      moves.push(update[1].san);
+      if (update[0][0] === "b") {
         blackKingInCheck = true;
       } else {
         whiteKingInCheck = true;
       }
     } else if (
-      update === "b has been checkmated" ||
-      update === "w has been checkmated"
+      update[0] === "b has been checkmated" ||
+      update[0] === "w has been checkmated"
     ) {
+      moves.push(update[1].san);
       if (update[0] === "b") {
         blackCheckmated = true;
       } else {
@@ -273,6 +276,8 @@ const ChessGameWrapper = (props) => {
   const [opponentUserName, setUserName] = React.useState("");
   const [gameSessionDoesNotExist, doesntExist] = React.useState(false);
 
+  const [boardMoves, setBoardMoves] = React.useState([]);
+
   React.useEffect(() => {
     socket.on("playerJoinedRoom", (statusUpdate) => {
       console.log(
@@ -332,6 +337,13 @@ const ChessGameWrapper = (props) => {
     });
   }, []);
 
+  async function updateMoves() {
+    setBoardMoves(moves);
+  }
+
+  var movesUpdate = setInterval(updateMoves, 500);
+  // var turns = 0;
+
   return (
     <React.Fragment>
       {opponentDidJoinTheGame ? (
@@ -351,20 +363,20 @@ const ChessGameWrapper = (props) => {
               <h4> Opponent Name: {opponentUserName} </h4>{" "}
               <h4>Your Name: {props.myUserName} </h4>
             </Alert>
-            <Button
-              variant="primary"
-              onClick={() => {
-                console.log(moves);
-              }}
-            >
-              Store Moves
-            </Button>
+
             <div>
               <ChessGame
                 playAudio={play}
                 gameId={gameid}
                 color={color.didRedirect}
               />
+              Ordered List of moves of both players: Keep on updating this list
+              as the game progresses.
+              <ol>
+                {boardMoves.map((move) => {
+                  return <li>{move}</li>;
+                })}
+              </ol>
               <VideoChatApp
                 mySocketId={socket.id}
                 opponentSocketId={opponentSocketId}
