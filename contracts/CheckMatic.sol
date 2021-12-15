@@ -1,5 +1,3 @@
-// Deployed at Polygon Mumbai Testnet: 0x08c4d172937054a861388be461d482bd4915dcda
-
 pragma solidity >=0.7.0 <0.9.0;
 
 contract CheckMatic{

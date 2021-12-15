@@ -60,9 +60,6 @@ function BettingAmount() {
           width: "auto",
         }}
       />
-      <small style={{ paddingBottom: "50px" }}>
-        Make sure you are on Polygon Mumbai Testnet.
-      </small>
     </div>
   );
 }

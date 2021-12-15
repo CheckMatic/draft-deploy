@@ -132,13 +132,13 @@ class CryptoChessGame extends React.Component {
     });
 
     if (blackCheckmated) {
-      document.cookie = "winner=white; Path=/;";
+      document.cookie = "winner=white";
       alert(
         "WHITE WON BY CHECKMATE! Accept the transaction to claim rewards!!"
       );
       // Call the function to claim the reward
     } else if (whiteCheckmated) {
-      document.cookie = "winner=black; Path=/;";
+      document.cookie = "winner=black";
       alert(
         "BLACK WON BY CHECKMATE! Accept the transaction to claim rewards!!"
       );
@@ -475,10 +475,6 @@ const CryptoChessGameWrapper = (props) => {
     }
     return "";
   }
-  function delete_cookie(name) {
-    document.cookie =
-      name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-  }
 
   async function checkFunction(boardNumber) {
     getBoardNumber();
@@ -510,18 +506,12 @@ const CryptoChessGameWrapper = (props) => {
       setShowBlackDeposit(true);
       setShowClaimButtonForWhite(true);
       notify(state);
-
+      clearInterval(intervalDuration);
       <Typical
         steps={["The game is now ready to play", 1000]}
         loop={1}
         wrapper="p"
       />;
-    } else if (state === "5") {
-      clearInterval(intervalDuration);
-      delete_cookie("boardNumber");
-      delete_cookie("checkState");
-      delete_cookie("winner");
-      delete_cookie("bet");
     }
     if (winner === "black") {
       setShowClaimButtonForBlack(false);
