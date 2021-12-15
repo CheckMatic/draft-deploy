@@ -122,7 +122,19 @@ const App = ({ isServerInfo }) => {
 
         <div style={styles.content}>
           {!isAuthenticated ? (
-            <>Please login using the "Authenticate" button</>
+            <>
+              Please login using the "Authenticate" button.
+              <br />
+              You require a Metamask extension to use this app. If you don't
+              have one, you can add one
+              <a
+                href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn/related"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                MetaMask
+              </a>
+            </>
           ) : (
             <Switch>
               <Route path="/quickstart">
@@ -169,7 +181,10 @@ const App = ({ isServerInfo }) => {
                 <CreateNFT />
               </Route>
               <Route path="/nonauthenticated">
-                <>Please login using the "Authenticate" button</>
+                <>
+                  Please login using the "Authenticate" button. You require a
+                  Metamask account to use this app.
+                </>
               </Route>
               <ColorContext.Provider
                 value={{
