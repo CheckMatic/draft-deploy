@@ -370,8 +370,7 @@ const ChessGameWrapper = (props) => {
                 gameId={gameid}
                 color={color.didRedirect}
               />
-              Ordered List of moves of both players: Keep on updating this list
-              as the game progresses.
+              The Moves:
               <ol>
                 {boardMoves.map((move) => {
                   return <li>{move}</li>;
